@@ -6,7 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="board4x3.json" />
+    <None Remove="Moves.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="board4x3.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Moves.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
