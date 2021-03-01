@@ -7,14 +7,14 @@
 
   <ItemGroup>
     <None Remove="board4x3.json" />
-    <None Remove="Moves.json" />
+    <None Remove="boardWithEverything.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="board4x3.json">
+    <Content Include="boardWithEverything.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Moves.json">
+    <Content Include="board4x3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

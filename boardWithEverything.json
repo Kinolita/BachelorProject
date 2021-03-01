@@ -1,26 +1,30 @@
 ﻿{
   "information": [
     {
-      "platform_name": "4by3example",
+      "platform_name": "BoardWithEverything",
       "platform_type": "example",
-      "platform_ID": "012345678",
-      "sizeX": 80,
+      "platform_ID": "121212",
+      "sizeX": 60,
       "sizeY": 60
     }
   ],
   "electrodes": [
     {
-      "name": "e10",
+      "name": "triangle_sample",
       "ID": 0,
       "electrodeID": 0,
       "driverID": -1,
-      "shape": 0,
-      "positionX": 0,
-      "positionY": 0,
-      "sizeX": 20,
-      "sizeY": 20,
+      "shape": 1,
+      "positionX": 10,
+      "positionY": 10,
+      "sizeX": 0,
+      "sizeY": 0,
       "status": 0,
-      "corners": null
+      "corners": [
+        [ 0, 0 ],
+        [ 0, 20 ],
+        [ 20, 20 ]
+      ]
     },
 
     {
@@ -133,53 +137,41 @@
       "sizeY": 20,
       "status": 0,
       "corners": null
-    },
-
+    }
+  ],
+  "actuators": [
     {
-      "name": "el9",
-      "ID": 9,
-      "electrodeID": 9,
-      "driverID": -1,
-      "shape": 0,
+      "name": "heat2",
+      "ID": 2,
+      "actuatorID": 30,
+      "type": "heater",
       "positionX": 20,
       "positionY": 40,
       "sizeX": 20,
       "sizeY": 20,
-      "status": 0,
-      "corners": null
-    },
-
-    {
-      "name": "el10",
-      "ID": 10,
-      "electrodeID": 10,
-      "driverID": -1,
-      "shape": 0,
-      "positionX": 40,
-      "positionY": 40,
-      "sizeX": 20,
-      "sizeY": 20,
-      "status": 0,
-      "corners": null
-    },
-
-    {
-      "name": "el11",
-      "ID": 11,
-      "electrodeID": 11,
-      "driverID": -1,
-      "shape": 0,
-      "positionX": 60,
-      "positionY": 40,
-      "sizeX": 20,
-      "sizeY": 20,
-      "status": 0,
+      "actualTemperature": 0,
+      "desiredTemperature": 100,
+      "status": false,
+      "nextDesiredTemperature": 0,
+      "nextStatus": false,
       "corners": null
     }
-
   ],
-  "actuators": null,
-  "sensors": null,
+  "sensors": [
+    {
+      "name": "rgb1",
+      "ID": 3,
+      "actuatorID": 35,
+      "type": "RGB_color",
+      "positionX": 20,
+      "positionY": 0,
+      "sizeX": 40,
+      "sizeY": 20,
+      "valueRed": 0,
+      "valueGreen": 0,
+      "valueBlue": 0
+    }
+  ],
   "inputs": [
     {
       "name": "in0",
@@ -198,7 +190,28 @@
       "positionY": 30
     }
   ],
-  "droplets": null,
-  "bubbles": null,
+  "droplets": [
+    {
+      "name": "drop1",
+      "ID": "001",
+      "substance_name": "coffee",
+      "positionX": "20",
+      "positionY": "40",
+      "sizeX": "20",
+      "sizeY": "20",
+      "color": "brown",
+      "temperature": "82"
+    }
+  ],
+  "bubbles": [
+    {
+      "name": "bubble1",
+      "ID": "0001",
+      "positionX": "50",
+      "positionY": "10",
+      "sizeX": "10",
+      "sizeY": "10"
+    }
+  ],
   "unclassified": null
 }
