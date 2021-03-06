@@ -16,6 +16,8 @@ namespace BachelorProject.Models.Dtos
         public static void PrintInformation(BachelorProject.Models.Dtos.Board Specs) {
             System.Console.WriteLine("Board Specifications: ");
             int len = Specs.Information.Count;
+
+            //really there should be no need for the for loop as there should only be one block of information
             for (int i = 0; i < len; i++) {
                 System.Console.WriteLine("Platform Name: " + Specs.Information[i].PlatformName);
                 System.Console.WriteLine("Platform Type: " + Specs.Information[i].PlatformType);
