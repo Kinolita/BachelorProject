@@ -32,9 +32,6 @@ namespace BachelorProject.Models
                 }
             }
             return PixelBoard1;
-            //Console.WriteLine("One: " + PixelBoard1[45, 15].WhichElectrode); //2
-            //Console.WriteLine("Two: " + PixelBoard1[22, 23].WhichElectrode);//5
-            //Console.WriteLine("3: " + PixelBoard1[44, 55].WhichElectrode);//10
         }
     }
 }
