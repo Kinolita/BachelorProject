@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BachelorProject.Models
 {
-    struct Coord
+    public struct Coord
     {
         public int x;
         public int y;

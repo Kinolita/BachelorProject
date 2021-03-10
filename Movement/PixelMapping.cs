@@ -14,8 +14,13 @@ namespace BachelorProject.Movement
         public static void Move(Pixels[,] PixelBoard, Coord start, Coord end, List<Coord> PixelList) {
             Coord NewMove;
             //Console.WriteLine("moving: ");
+            //Console.WriteLine("Vacancy: " + PixelBoard[start.x-1, start.y].Vacancy);
             if (start.x == end.x && start.y == end.y) {
                 Console.WriteLine("Goal found!");
+                Console.WriteLine("Pixel list: " );
+                for (int i=0; i<PixelList.Count; i++) {
+                    Console.Write("(" + PixelList[i].x + "," + PixelList[i].y + ")  ");
+                }
                 FindElectrodes(PixelBoard, PixelList);
             } else if (!ValidateOnBoard(PixelBoard, start) || !ValidateOnBoard(PixelBoard, end)) {
                 Console.WriteLine("One of the points is not on the board: (" + start.x + "," + start.y + ") (" + end.x + "," + end.y + ")");
