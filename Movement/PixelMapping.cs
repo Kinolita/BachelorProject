@@ -4,24 +4,23 @@ using System.Collections.Generic;
 
 namespace BachelorProject.Movement
 {
-    class BasicRouting
+    class PixelMapping
     {
         public static void FindPath(Pixels[,] PixelBoard, Coord start, Coord end) {
             List<Coord> PixelList = new List<Coord>();
-            BasicRouting.Move(PixelBoard, start, end, PixelList);
+            PixelMapping.Move(PixelBoard, start, end, PixelList);
         }
 
         public static void Move(Pixels[,] PixelBoard, Coord start, Coord end, List<Coord> PixelList) {
             Coord NewMove;
             //Console.WriteLine("moving: ");
+            //Console.WriteLine("Vacancy: " + PixelBoard[start.x-1, start.y].Vacancy);
             if (start.x == end.x && start.y == end.y) {
-                Console.WriteLine("The end was reached!");
-                Console.WriteLine("Pixel list: ");
-                for (int i = 0; i < PixelList.Count; i++) {
+                Console.WriteLine("Goal found!");
+                Console.WriteLine("Pixel list: " );
+                for (int i=0; i<PixelList.Count; i++) {
                     Console.Write("(" + PixelList[i].x + "," + PixelList[i].y + ")  ");
                 }
-                Console.WriteLine();
-                Console.WriteLine("The final electrode path: ");
                 FindElectrodes(PixelBoard, PixelList);
             } else if (!ValidateOnBoard(PixelBoard, start) || !ValidateOnBoard(PixelBoard, end)) {
                 Console.WriteLine("One of the points is not on the board: (" + start.x + "," + start.y + ") (" + end.x + "," + end.y + ")");
@@ -55,9 +54,9 @@ namespace BachelorProject.Movement
                 Move(PixelBoard, NewMove, end, PixelList);
 
             } else {
-                Console.WriteLine("Something happened at point (" + start.x + "," + start.y + ")");
-                Console.WriteLine("The electrode path so far: ");
-                FindElectrodes(PixelBoard, PixelList);
+                Console.WriteLine("something else happened");
+                Console.WriteLine("start: " + start.x + "," + start.y);
+                Console.WriteLine("end: " + end.x + "," + end.y);
             }
         }
 
@@ -78,6 +77,7 @@ namespace BachelorProject.Movement
             for (int i = 0; i < listy.Count; i++) {
                 EList.Add(PixelBoard[listy[i].x, listy[i].y].WhichElectrode);
             }
+            Console.WriteLine("The electrode path: ");
             foreach (int that in EList) {
                 Console.WriteLine(that);
             }

@@ -59,28 +59,25 @@ namespace BachelorProject.Models
                 }
             }
 
-            //program can recognize but not successfully navigate around bubbles and droplets now
-            //assigning vacancy(bubbles and droplets)
-            if (Specs.Droplets != null) {
-                for (int m = 0; m < Specs.Droplets.Count; m++) {
-                    for (int q = Specs.Droplets[m].PositionX; q < Specs.Droplets[m].PositionX + Specs.Droplets[m].SizeX; q++) {
-                        for (int r = Specs.Droplets[m].PositionY; r < Specs.Droplets[m].PositionY + Specs.Droplets[m].SizeY; r++) {
-                            PixelBoard1[q, r].Vacancy = false;
-                            PixelBoard1[q, r].BlockageType = "droplet";
-                        }
-                    }
-                }
-            }
-            if (Specs.Bubbles != null) {
-                for (int m = 0; m < Specs.Bubbles.Count; m++) {
-                    for (int q = Specs.Bubbles[m].PositionX; q < Specs.Bubbles[m].PositionX + Specs.Bubbles[m].SizeX; q++) {
-                        for (int r = Specs.Bubbles[m].PositionY; r < Specs.Bubbles[m].PositionY + Specs.Bubbles[m].SizeY; r++) {
-                            PixelBoard1[q, r].Vacancy = false;
-                            PixelBoard1[q, r].BlockageType = "bubble";
-                        }
-                    }
-                }
-            }
+            //this part wont work until accounting for an absence of droplets and bubbles in the json
+            //program can recognize but not successfully navigate around bubbles and droplets right now
+            //assigning vacancy (bubbles and droplets)
+            //for (int m = 0; m < Specs.Droplets.Count; m++) {
+            //    for (int q = Specs.Droplets[m].PositionX; q < Specs.Droplets[m].PositionX + Specs.Droplets[m].SizeX; q++) {
+            //        for (int r = Specs.Droplets[m].PositionY; r < Specs.Droplets[m].PositionY + Specs.Droplets[m].SizeY; r++) {
+            //            PixelBoard1[q, r].Vacancy = false;
+            //            PixelBoard1[q, r].BlockageType = "droplet";
+            //        }
+            //    }
+            //}
+            //for (int m = 0; m < Specs.Bubbles.Count; m++) {
+            //    for (int q = Specs.Bubbles[m].PositionX; q < Specs.Bubbles[m].PositionX + Specs.Bubbles[m].SizeX; q++) {
+            //        for (int r = Specs.Bubbles[m].PositionY; r < Specs.Bubbles[m].PositionY + Specs.Bubbles[m].SizeY; r++) {
+            //            PixelBoard1[q, r].Vacancy = false;
+            //            PixelBoard1[q, r].BlockageType = "bubble";
+            //        }
+            //    }
+            //}
             return PixelBoard1;
         }
     }

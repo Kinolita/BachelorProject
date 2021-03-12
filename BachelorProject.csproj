@@ -8,13 +8,9 @@
   <ItemGroup>
     <None Remove="board4x3.json" />
     <None Remove="boardWithEverything.json" />
-    <None Remove="mazeBoard.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="mazeBoard.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="boardWithEverything.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
