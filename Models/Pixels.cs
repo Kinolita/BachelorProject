@@ -1,8 +1,5 @@
 ﻿using BachelorProject.Models.Dtos;
 using BachelorProject.Scraps;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BachelorProject.Models
 {
@@ -32,9 +29,9 @@ namespace BachelorProject.Models
                         if (Specs.Electrodes[m].Shape == 0) {
                             int n = 4;
                             Coord[] polygon1 = {new Coord(Specs.Electrodes[m].PositionX, Specs.Electrodes[m].PositionY),
-                                new Coord(Specs.Electrodes[m].PositionX + Specs.Electrodes[m].SizeX, Specs.Electrodes[m].PositionY),
-                                new Coord(Specs.Electrodes[m].PositionX + Specs.Electrodes[m].SizeX, Specs.Electrodes[m].PositionY + Specs.Electrodes[m].SizeY),
-                                new Coord(Specs.Electrodes[m].PositionX, Specs.Electrodes[m].PositionY + Specs.Electrodes[m].SizeY)};
+                                new Coord(Specs.Electrodes[m].PositionX + Specs.Electrodes[m].SizeX-1, Specs.Electrodes[m].PositionY),
+                                new Coord(Specs.Electrodes[m].PositionX + Specs.Electrodes[m].SizeX-1, Specs.Electrodes[m].PositionY + Specs.Electrodes[m].SizeY-1),
+                                new Coord(Specs.Electrodes[m].PositionX, Specs.Electrodes[m].PositionY + Specs.Electrodes[m].SizeY-1)};
                             if (PolygonPoints.IsInside(polygon1, n, p)) {
                                 pix.WhichElectrode = Specs.Electrodes[m].ID;
                                 pix.Vacancy = true;
