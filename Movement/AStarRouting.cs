@@ -36,6 +36,7 @@ namespace BachelorProject.Movement
                 finish.X = ending.x;
                 finish.Y = ending.y;
                 start.SetDistance(finish.X, finish.Y);
+                Console.WriteLine("Start: " + start.X + "," + start.Y + " END: " + finish.X + "," + finish.Y);
 
                 var activeTiles = new List<Tile>();
                 activeTiles.Add(start);
@@ -56,7 +57,7 @@ namespace BachelorProject.Movement
                     return possibleTiles
                             .Where(tile => tile.X >= 0 && tile.X < maxX)
                             .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            .Where(tile => Blockages.CanWeMoveThere(PixelBoard, new Coord(tile.X, tile.Y)) == true)
+                            .Where(tile => Blockages.DropletBubbleCheck(PixelBoard, new Coord(tile.X, tile.Y)) == true)
                             .Where(tile => PixelBoard[tile.X, tile.Y].Empty == true || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                             .ToList();
                 }

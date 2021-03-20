@@ -63,7 +63,7 @@ namespace BachelorProject.Models
                     for (int q = Specs.Droplets[m].PositionX; q < Specs.Droplets[m].PositionX + Specs.Droplets[m].SizeX; q++) {
                         for (int r = Specs.Droplets[m].PositionY; r < Specs.Droplets[m].PositionY + Specs.Droplets[m].SizeY; r++) {
                             PixelBoard1[q, r].Empty = false;
-                            PixelBoard1[q, r].BlockageType = "droplet";
+                            PixelBoard1[q, r].BlockageType = "Droplet";
                         }
                     }
                 }
@@ -73,7 +73,7 @@ namespace BachelorProject.Models
                     for (int q = Specs.Bubbles[m].PositionX; q < Specs.Bubbles[m].PositionX + Specs.Bubbles[m].SizeX; q++) {
                         for (int r = Specs.Bubbles[m].PositionY; r < Specs.Bubbles[m].PositionY + Specs.Bubbles[m].SizeY; r++) {
                             PixelBoard1[q, r].Empty = false;
-                            PixelBoard1[q, r].BlockageType = "bubble";
+                            PixelBoard1[q, r].BlockageType = "Bubble";
                         }
                     }
                 }

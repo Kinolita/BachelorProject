@@ -5,18 +5,6 @@ namespace BachelorProject.Movement
 {
     class InputHandler
     {
-        //public static void CheckInputType(Pixels[,] PixelBoard, object start, object finish) {
-        //    Type s = start.GetType();
-        //    Type t = finish.GetType();
-        //    if (s.Equals(typeof(int))) {
-        //        start = Coord.FindPixel(PixelBoard, (int)start);
-        //    }
-        //    if (t.Equals(typeof(int))) {
-        //        finish = Coord.FindPixel(PixelBoard, (int)finish);
-        //    }
-        //    AStarRouting.Tile.AStar(PixelBoard, (Coord)start, (Coord)finish);
-        //}
-
         public static void CheckInputType(Pixels[,] PixelBoard, Coord start, Coord finish) {
             AStarRouting.Tile.AStar(PixelBoard, start, finish);
         }
