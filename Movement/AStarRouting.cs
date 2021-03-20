@@ -6,6 +6,8 @@ using System.Text;
 
 namespace BachelorProject.Movement
 {
+    ////////////////////////////////inspired from......     include this with any imported code
+
     public class AStarRouting
     {
         public class Tile
@@ -23,25 +25,28 @@ namespace BachelorProject.Movement
                 this.Distance = Math.Abs(targetX - X) + Math.Abs(targetY - Y);
             }
 
-
             //C# code found at:
             //https://dotnetcoretutorials.com/2020/07/25/a-search-pathfinding-algorithm-in-c/
+            public static void AStar(Pixels[,] PixelBoard, Coord starting, Coord ending) {
+                var start = new Tile();
+                start.X = starting.x;
+                start.Y = starting.y;
 
-            public static void AStar(Pixels[,] PixelBoard, Tile start, Tile finish) {
+                var finish = new Tile();
+                finish.X = ending.x;
+                finish.Y = ending.y;
                 start.SetDistance(finish.X, finish.Y);
 
                 var activeTiles = new List<Tile>();
                 activeTiles.Add(start);
                 var visitedTiles = new List<Tile>();
 
-
                 static List<Tile> GetWalkableTiles(Pixels[,] PixelBoard, Tile currentTile, Tile targetTile) {
-                    var possibleTiles = new List<Tile>()
-                    {
-                new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
-                new Tile { X = currentTile.X, Y = currentTile.Y + 1, Parent = currentTile, Cost = currentTile.Cost + 1},
-                new Tile { X = currentTile.X - 1, Y = currentTile.Y, Parent = currentTile, Cost = currentTile.Cost + 1 },
-                new Tile { X = currentTile.X + 1, Y = currentTile.Y, Parent = currentTile, Cost = currentTile.Cost + 1 }, };
+                    var possibleTiles = new List<Tile>() {
+                        new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
+                        new Tile { X = currentTile.X, Y = currentTile.Y + 1, Parent = currentTile, Cost = currentTile.Cost + 1},
+                        new Tile { X = currentTile.X - 1, Y = currentTile.Y, Parent = currentTile, Cost = currentTile.Cost + 1 },
+                        new Tile { X = currentTile.X + 1, Y = currentTile.Y, Parent = currentTile, Cost = currentTile.Cost + 1 }, };
 
                     possibleTiles.ForEach(tile => tile.SetDistance(targetTile.X, targetTile.Y));
 
@@ -51,7 +56,8 @@ namespace BachelorProject.Movement
                     return possibleTiles
                             .Where(tile => tile.X >= 0 && tile.X < maxX)
                             .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            .Where(tile => PixelBoard[tile.X, tile.Y].Vacancy == true || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
+                            .Where(tile => Blockages.CanWeMoveThere(PixelBoard, new Coord(tile.X, tile.Y)) == true)
+                            .Where(tile => PixelBoard[tile.X, tile.Y].Empty == true || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                             .ToList();
                 }
 
@@ -66,12 +72,12 @@ namespace BachelorProject.Movement
                         //We found the destination and we can be sure (Because the the OrderBy above)
                         //That it's the most low cost option. 
                         var tile = checkTile;
-                        Console.WriteLine("Retracing steps backwards...");
+                        List<Coord> PixelList = new List<Coord>();
                         while (true) {
-                            Console.Write($"({tile.X},{tile.Y})  ");
+                            PixelList.Insert(0, new Coord(tile.X, tile.Y));
                             tile = tile.Parent;
                             if (tile == null) {
-                                Console.WriteLine("Done!");
+                                BasicRouting.FindElectrodes(PixelBoard, PixelList);
                                 return;
                             }
                         }
@@ -102,7 +108,6 @@ namespace BachelorProject.Movement
                 }
                 Console.WriteLine("No Path Found!");
             }
-
         }
     }
 }

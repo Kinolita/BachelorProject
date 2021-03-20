@@ -5,15 +5,13 @@ namespace BachelorProject.Scraps
 {
     public class PolygonPoints
     {
+        ////////////////////////////////inspired from......     include this with any imported code
         // A C# program to check if a given point lies inside a given polygon 
-        // Refer https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ 
-        // for explanation of functions onSegment(), orientation(), and doIntersect() 
+        // https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ 
 
-        // Define Infinite (Using INT_MAX caused overflow problems) 
         static int INF = 10000;
 
-        // Given three colinear points p, q, r, the function checks if point q lies 
-        // on line segment 'pr' 
+        // Given 3 colinear points p, q, r, the function checks if point q lies on line segment 'pr' 
         static bool onSegment(Coord p, Coord q, Coord r) {
             if (q.x <= Math.Max(p.x, r.x) &&
                 q.x >= Math.Min(p.x, r.x) &&

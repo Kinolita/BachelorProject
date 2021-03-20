@@ -13,7 +13,6 @@ namespace BachelorProject.Movement
 
         public static void Move(Pixels[,] PixelBoard, Coord start, Coord end, List<Coord> PixelList) {
             Coord NewMove;
-            //Console.WriteLine("moving: ");
             if (start.x == end.x && start.y == end.y) {
                 Console.WriteLine("The end was reached!");
                 Console.WriteLine("Pixel list: ");
@@ -27,28 +26,28 @@ namespace BachelorProject.Movement
                 Console.WriteLine("One of the points is not on the board: (" + start.x + "," + start.y + ") (" + end.x + "," + end.y + ")");
 
                 //Move right
-            } else if (start.x < end.x && PixelBoard[start.x + 1, start.y].Vacancy) {
+            } else if (start.x < end.x && PixelBoard[start.x + 1, start.y].Empty) {
                 NewMove = new Coord(start.x + 1, start.y);
                 UpdateVacancy(PixelBoard, start, NewMove);
                 PixelList.Add(NewMove);
                 Move(PixelBoard, NewMove, end, PixelList);
 
                 //Move left
-            } else if (start.x > end.x && PixelBoard[start.x - 1, start.y].Vacancy) {
+            } else if (start.x > end.x && PixelBoard[start.x - 1, start.y].Empty) {
                 NewMove = new Coord(start.x - 1, start.y);
                 UpdateVacancy(PixelBoard, start, NewMove);
                 PixelList.Add(NewMove);
                 Move(PixelBoard, NewMove, end, PixelList);
 
                 //Move down
-            } else if (start.y < end.y && PixelBoard[start.x, start.y + 1].Vacancy) {
+            } else if (start.y < end.y && PixelBoard[start.x, start.y + 1].Empty) {
                 NewMove = new Coord(start.x, start.y + 1);
                 UpdateVacancy(PixelBoard, start, NewMove);
                 PixelList.Add(NewMove);
                 Move(PixelBoard, NewMove, end, PixelList);
 
                 //Move up
-            } else if (start.y > end.y && PixelBoard[start.x, start.y - 1].Vacancy) {
+            } else if (start.y > end.y && PixelBoard[start.x, start.y - 1].Empty) {
                 NewMove = new Coord(start.x, start.y - 1);
                 UpdateVacancy(PixelBoard, start, NewMove);
                 PixelList.Add(NewMove);
@@ -57,6 +56,7 @@ namespace BachelorProject.Movement
             } else {
                 Console.WriteLine("Something happened at point (" + start.x + "," + start.y + ")");
                 Console.WriteLine("The electrode path so far: ");
+                FindElectrodes(PixelBoard, PixelList);
                 FindElectrodes(PixelBoard, PixelList);
             }
         }
@@ -69,8 +69,8 @@ namespace BachelorProject.Movement
         }
 
         public static void UpdateVacancy(Pixels[,] PixelBoard, Coord old, Coord neww) {
-            PixelBoard[old.x, old.y].Vacancy = true;
-            PixelBoard[neww.x, neww.y].Vacancy = false;
+            PixelBoard[old.x, old.y].Empty = true;
+            PixelBoard[neww.x, neww.y].Empty = false;
         }
 
         public static void FindElectrodes(Pixels[,] PixelBoard, List<Coord> listy) {

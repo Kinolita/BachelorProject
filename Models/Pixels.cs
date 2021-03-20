@@ -5,7 +5,7 @@ namespace BachelorProject.Models
 {
     public class Pixels
     {
-        public bool Vacancy { get; set; }
+        public bool Empty { get; set; }
         public string BlockageType { get; set; }
         // (Contaminated, OoB, bubble, droplet, etc.)
         public int WhichElectrode { get; set; }
@@ -18,7 +18,7 @@ namespace BachelorProject.Models
                 for (int j = 0; j < Specs.Information[0].SizeY; j++) {
                     Pixels pix = new Pixels();
                     PixelBoard1[k, j] = pix;
-                    pix.Vacancy = false;
+                    pix.Empty = false;
                     pix.BlockageType = "OoB";
                     pix.WhichElectrode = -1;
 
@@ -34,7 +34,7 @@ namespace BachelorProject.Models
                                 new Coord(Specs.Electrodes[m].PositionX, Specs.Electrodes[m].PositionY + Specs.Electrodes[m].SizeY-1)};
                             if (PolygonPoints.IsInside(polygon1, n, p)) {
                                 pix.WhichElectrode = Specs.Electrodes[m].ID;
-                                pix.Vacancy = true;
+                                pix.Empty = true;
                                 pix.BlockageType = "";
 
                             }
@@ -48,7 +48,7 @@ namespace BachelorProject.Models
                             }
                             if (PolygonPoints.IsInside(polygon2, nn, p)) {
                                 pix.WhichElectrode = Specs.Electrodes[m].ID;
-                                pix.Vacancy = true;
+                                pix.Empty = true;
                                 pix.BlockageType = "";
                             }
                         }
@@ -62,7 +62,7 @@ namespace BachelorProject.Models
                 for (int m = 0; m < Specs.Droplets.Count; m++) {
                     for (int q = Specs.Droplets[m].PositionX; q < Specs.Droplets[m].PositionX + Specs.Droplets[m].SizeX; q++) {
                         for (int r = Specs.Droplets[m].PositionY; r < Specs.Droplets[m].PositionY + Specs.Droplets[m].SizeY; r++) {
-                            PixelBoard1[q, r].Vacancy = false;
+                            PixelBoard1[q, r].Empty = false;
                             PixelBoard1[q, r].BlockageType = "droplet";
                         }
                     }
@@ -72,7 +72,7 @@ namespace BachelorProject.Models
                 for (int m = 0; m < Specs.Bubbles.Count; m++) {
                     for (int q = Specs.Bubbles[m].PositionX; q < Specs.Bubbles[m].PositionX + Specs.Bubbles[m].SizeX; q++) {
                         for (int r = Specs.Bubbles[m].PositionY; r < Specs.Bubbles[m].PositionY + Specs.Bubbles[m].SizeY; r++) {
-                            PixelBoard1[q, r].Vacancy = false;
+                            PixelBoard1[q, r].Empty = false;
                             PixelBoard1[q, r].BlockageType = "bubble";
                         }
                     }

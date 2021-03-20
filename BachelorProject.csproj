@@ -9,10 +9,18 @@
     <None Remove="board4x3.json" />
     <None Remove="boardWithEverything.json" />
     <None Remove="JSONBoards\board10x10.json" />
+    <None Remove="JSONBoards\board10x10FatMaze.json" />
+    <None Remove="JSONBoards\board10x10Maze.json" />
     <None Remove="mazeBoard.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="JSONBoards\board10x10FatMaze.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JSONBoards\board10x10Maze.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="JSONBoards\board10x10.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
