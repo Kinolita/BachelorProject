@@ -1,7 +1,6 @@
-﻿using BachelorProject.Models;
-using System;
+﻿using System;
 
-namespace BachelorProject.Scraps
+namespace BachelorProject.Models
 {
     public class PolygonPoints
     {
@@ -11,40 +10,40 @@ namespace BachelorProject.Scraps
 
         static int INF = 10000;
 
-        // Given 3 colinear points p, q, r, the function checks if point q lies on line segment 'pr' 
-        static bool onSegment(Coord p, Coord q, Coord r) {
-            if (q.x <= Math.Max(p.x, r.x) &&
-                q.x >= Math.Min(p.x, r.x) &&
-                q.y <= Math.Max(p.y, r.y) &&
-                q.y >= Math.Min(p.y, r.y)) {
+        // Given 3 co-linear points p, q, r, the function checks if point q lies on line segment 'pr' 
+        private static bool OnSegment(Coord p, Coord q, Coord r) {
+            if (q.X <= Math.Max(p.X, r.X) &&
+                q.X >= Math.Min(p.X, r.X) &&
+                q.Y <= Math.Max(p.Y, r.Y) &&
+                q.Y >= Math.Min(p.Y, r.Y)) {
                 return true;
             }
             return false;
         }
 
-        // To find orientation of ordered triplet (p, q, r). 
+        // To find Orientation of ordered triplet (p, q, r). 
         // The function returns following values 
-        // 0 --> p, q and r are colinear 
+        // 0 --> p, q and r are co-linear 
         // 1 --> Clockwise 
         // 2 --> Counterclockwise 
-        static int orientation(Coord p, Coord q, Coord r) {
-            int val = (q.y - p.y) * (r.x - q.x) -
-                    (q.x - p.x) * (r.y - q.y);
+        static int Orientation(Coord p, Coord q, Coord r) {
+            int val = (q.Y - p.Y) * (r.X - q.X) -
+                    (q.X - p.X) * (r.Y - q.Y);
 
             if (val == 0) {
-                return 0; // colinear 
+                return 0; // co-linear 
             }
-            return (val > 0) ? 1 : 2; // clock or counterclock wise 
+            return (val > 0) ? 1 : 2; // clock or counter clockwise 
         }
 
         // The function that returns true if line segment 'p1q1' and 'p2q2' intersect. 
-        static bool doIntersect(Coord p1, Coord q1,
+        static bool DoIntersect(Coord p1, Coord q1,
                                 Coord p2, Coord q2) {
             // Find the four orientations needed for general and special cases 
-            int o1 = orientation(p1, q1, p2);
-            int o2 = orientation(p1, q1, q2);
-            int o3 = orientation(p2, q2, p1);
-            int o4 = orientation(p2, q2, q1);
+            int o1 = Orientation(p1, q1, p2);
+            int o2 = Orientation(p1, q1, q2);
+            int o3 = Orientation(p2, q2, p1);
+            int o4 = Orientation(p2, q2, q1);
 
             // General case 
             if (o1 != o2 && o3 != o4) {
@@ -52,23 +51,23 @@ namespace BachelorProject.Scraps
             }
 
             // Special Cases 
-            // p1, q1 and p2 are colinear and p2 lies on segment p1q1 
-            if (o1 == 0 && onSegment(p1, p2, q1)) {
+            // p1, q1 and p2 are co-linear and p2 lies on segment p1q1 
+            if (o1 == 0 && OnSegment(p1, p2, q1)) {
                 return true;
             }
 
-            // p1, q1 and p2 are colinear and q2 lies on segment p1q1 
-            if (o2 == 0 && onSegment(p1, q2, q1)) {
+            // p1, q1 and p2 are co-linear and q2 lies on segment p1q1 
+            if (o2 == 0 && OnSegment(p1, q2, q1)) {
                 return true;
             }
 
-            // p2, q2 and p1 are colinear and p1 lies on segment p2q2 
-            if (o3 == 0 && onSegment(p2, p1, q2)) {
+            // p2, q2 and p1 are co-linear and p1 lies on segment p2q2 
+            if (o3 == 0 && OnSegment(p2, p1, q2)) {
                 return true;
             }
 
-            // p2, q2 and q1 are colinear and q1 lies on segment p2q2 
-            if (o4 == 0 && onSegment(p2, q1, q2)) {
+            // p2, q2 and q1 are co-linear and q1 lies on segment p2q2 
+            if (o4 == 0 && OnSegment(p2, q1, q2)) {
                 return true;
             }
 
@@ -84,7 +83,7 @@ namespace BachelorProject.Scraps
             }
 
             // Create a point for line segment from p to infinite 
-            Coord extreme = new Coord(INF, p.y);
+            Coord extreme = new Coord(INF, p.Y);
 
             // Count intersections of the above line with sides of polygon 
             int count = 0, i = 0;
@@ -93,12 +92,12 @@ namespace BachelorProject.Scraps
 
                 // Check if the line segment from 'p' to 'extreme' intersects with the line 
                 // segment from 'polygon[i]' to 'polygon[next]' 
-                if (doIntersect(polygon[i],
+                if (DoIntersect(polygon[i],
                                 polygon[next], p, extreme)) {
-                    // If the point 'p' is colinear with line segment 'i-next', then check if it lies 
+                    // If the point 'p' is co-linear with line segment 'i-next', then check if it lies 
                     // on segment. If it lies, return true, otherwise false 
-                    if (orientation(polygon[i], p, polygon[next]) == 0) {
-                        return onSegment(polygon[i], p,
+                    if (Orientation(polygon[i], p, polygon[next]) == 0) {
+                        return OnSegment(polygon[i], p,
                                         polygon[next]);
                     }
                     count++;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace BachelorProject
 {
     class OldTestCode
@@ -9,14 +6,14 @@ namespace BachelorProject
         //These are lines used to test different aspects of the project as it developed
 
         ////Print functions for each element of the loaded board
-        //Information.PrintInformation(BoardSpecs);
-        //Electrode.PrintElectrodes(BoardSpecs);
-        //Actuator.PrintActuators(BoardSpecs);
-        //Sensor.PrintSensors(BoardSpecs);
-        //Input.PrintInputs(BoardSpecs);
-        //Output.PrintOutputs(BoardSpecs);
-        //Droplet.PrintDroplets(BoardSpecs);
-        //Bubble.PrintBubbles(BoardSpecs);
+        //Information.PrintInformation(boardSpecs);
+        //Electrode.PrintElectrodes(boardSpecs);
+        //Actuator.PrintActuators(boardSpecs);
+        //Sensor.PrintSensors(boardSpecs);
+        //Input.PrintInputs(boardSpecs);
+        //Output.PrintOutputs(boardSpecs);
+        //Droplet.PrintDroplets(boardSpecs);
+        //Bubble.PrintBubbles(boardSpecs);
 
         //Dummy navigation on board4x3
         //Models.Coord starting = new Models.Coord(10, 15);
@@ -41,16 +38,30 @@ namespace BachelorProject
         //Models.Coord starting = new Models.Coord(5, 25);
         //Models.Coord ending = new Models.Coord(95, 65);
 
-        //Console.WriteLine("Starting point: (" + starting.x + "," + starting.y + ")");
-        //Console.WriteLine("Ending point: (" + ending.x + "," + ending.y + ")");
-        //BasicRouting.FindPath(PixelBoard, starting, ending);
-        //Tile.AStar(PixelBoard, starting, ending);
+        //Console.WriteLine("Starting point: (" + starting.X + "," + starting.Y + ")");
+        //Console.WriteLine("Ending point: (" + ending.X + "," + ending.Y + ")");
+        //BasicRouting.FindPath(pixelBoard1, starting, ending);
+        //Tile.AStar(pixelBoard1, starting, ending);
 
         //testing input with electrodes vs coordinates or a mix
         //int startElec = 20;
         //int endElec = 69;
-        //InputHandler.CheckInputType(PixelBoard, startElec, endElec);
-        //InputHandler.CheckInputType(PixelBoard, starting, ending);
-        //InputHandler.CheckInputType(PixelBoard, starting, endElec);
+        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+        //InputHandler.CheckInputType(pixelBoard1, starting, ending);
+        //InputHandler.CheckInputType(pixelBoard1, starting, endElec);
+
+        //combining buffer with routing droplets
+        //int startElec = 0;
+        //int endElec = 99;
+        //int dropletSize = 15;
+        //Buffers.AddBuffer(pixelBoard1, dropletSize);
+        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+        //Buffers.RemoveBuffer(pixelBoard1);
+        //dropletSize = 5;
+        //Buffers.AddBuffer(pixelBoard1, dropletSize);
+        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+
+
+
     }
 }

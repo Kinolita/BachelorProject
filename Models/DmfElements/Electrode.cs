@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BachelorProject.Models.Dtos
+namespace BachelorProject.Models.DmfElements
 {
     public class Electrode
     {
         public string Name { get; set; }
-        public int ID { get; set; }
-        public int ElectrodeID { get; set; }
-        public int DriverID { get; set; }
+        public int Id { get; set; }
+        public int ElectrodeId { get; set; }
+        public int DriverId { get; set; }
         public int Shape { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
@@ -17,35 +17,35 @@ namespace BachelorProject.Models.Dtos
         public int Status { get; set; }
         public IList<IList<int>> Corners { get; set; }
 
-        public static void PrintElectrodes(BachelorProject.Models.Dtos.Board Specs) {
-            int len = Specs.Electrodes.Count;
-            System.Console.WriteLine("Number of electrodes on board: " + len);
+        public static void PrintElectrodes(Board specs) {
+            int len = specs.Electrodes.Count;
+            Console.WriteLine("Number of electrodes on board: " + len);
             string status1;
             for (int i = 0; i < len; i++) {
 
-                System.Console.WriteLine("Electrode Name: " + Specs.Electrodes[i].Name);
-                System.Console.WriteLine("ID: " + Specs.Electrodes[i].ID);
-                System.Console.WriteLine("Electrode ID: " + Specs.Electrodes[i].ElectrodeID);
-                System.Console.WriteLine("Driver ID: " + Specs.Electrodes[i].DriverID);
+                Console.WriteLine("Electrode Name: " + specs.Electrodes[i].Name);
+                Console.WriteLine("Id: " + specs.Electrodes[i].Id);
+                Console.WriteLine("Electrode Id: " + specs.Electrodes[i].ElectrodeId);
+                Console.WriteLine("Driver Id: " + specs.Electrodes[i].DriverId);
 
 
-                if (Specs.Electrodes[i].Shape == 0) {
-                    System.Console.WriteLine("Electrode Shape: rectangle");
-                    System.Console.WriteLine("Position of top left corner: (" + Specs.Electrodes[i].PositionX + ", " + Specs.Electrodes[i].PositionY + ")");
-                    System.Console.Write("Electrode Size: " + Specs.Electrodes[i].SizeX + " by " + Specs.Electrodes[i].SizeY);
+                if (specs.Electrodes[i].Shape == 0) {
+                    Console.WriteLine("Electrode Shape: rectangle");
+                    Console.WriteLine("Position of top left corner: (" + specs.Electrodes[i].PositionX + ", " + specs.Electrodes[i].PositionY + ")");
+                    Console.Write("Electrode Size: " + specs.Electrodes[i].SizeX + " by " + specs.Electrodes[i].SizeY);
 
                 } else {
-                    System.Console.WriteLine("Electrode Shape: custom polygon");
-                    System.Console.WriteLine("Electrode Origin: (" + Specs.Electrodes[i].PositionX + "," + Specs.Electrodes[i].PositionY + ")");
-                        System.Console.Write("Electrode corners: ");
-                    for (int j=0; j< Specs.Electrodes[i].Corners.Count; j++) {
-                        System.Console.Write("(" + Specs.Electrodes[i].Corners[j][0] + "," + Specs.Electrodes[i].Corners[j][1] + ") ");
+                    Console.WriteLine("Electrode Shape: custom polygon");
+                    Console.WriteLine("Electrode Origin: (" + specs.Electrodes[i].PositionX + "," + specs.Electrodes[i].PositionY + ")");
+                        Console.Write("Electrode corners: ");
+                    for (int j = 0; j < specs.Electrodes[i].Corners.Count; j++) {
+                        Console.Write("(" + specs.Electrodes[i].Corners[j][0] + "," + specs.Electrodes[i].Corners[j][1] + ") ");
                     }
-                };
+                }
 
-                if (Specs.Electrodes[i].Status == 0) { status1 = "off"; } else { status1 = "on"; };
-                System.Console.WriteLine(Environment.NewLine + "Electrode status: " + status1);
-                System.Console.WriteLine();
+                if (specs.Electrodes[i].Status == 0) { status1 = "off"; } else { status1 = "on"; }
+                Console.WriteLine(Environment.NewLine + "Electrode status: " + status1);
+                Console.WriteLine();
             }
         }
     }

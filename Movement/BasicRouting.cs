@@ -6,79 +6,79 @@ namespace BachelorProject.Movement
 {
     class BasicRouting
     {
-        public static void FindPath(Pixels[,] PixelBoard, Coord start, Coord end) {
-            List<Coord> PixelList = new List<Coord>();
-            BasicRouting.Move(PixelBoard, start, end, PixelList);
+        public static void FindPath(Pixels[,] pixelBoard, Coord start, Coord end) {
+            List<Coord> pixelList = new List<Coord>();
+            BasicRouting.Move(pixelBoard, start, end, pixelList);
         }
 
-        public static void Move(Pixels[,] PixelBoard, Coord start, Coord end, List<Coord> PixelList) {
-            Coord NewMove;
-            if (start.x == end.x && start.y == end.y) {
+        public static void Move(Pixels[,] pixelBoard, Coord start, Coord end, List<Coord> pixelList) {
+            Coord newMove;
+            if (start.X == end.X && start.Y == end.Y) {
                 Console.WriteLine("The end was reached!");
                 Console.WriteLine("Pixel list: ");
-                for (int i = 0; i < PixelList.Count; i++) {
-                    Console.Write("(" + PixelList[i].x + "," + PixelList[i].y + ")  ");
+                for (int i = 0; i < pixelList.Count; i++) {
+                    Console.Write("(" + pixelList[i].X + "," + pixelList[i].Y + ")  ");
                 }
                 Console.WriteLine();
                 Console.WriteLine("The final electrode path: ");
-                FindElectrodes(PixelBoard, PixelList);
-            } else if (!ValidateOnBoard(PixelBoard, start) || !ValidateOnBoard(PixelBoard, end)) {
-                Console.WriteLine("One of the points is not on the board: (" + start.x + "," + start.y + ") (" + end.x + "," + end.y + ")");
+                FindElectrodes(pixelBoard, pixelList);
+            } else if (!ValidateOnBoard(pixelBoard, start) || !ValidateOnBoard(pixelBoard, end)) {
+                Console.WriteLine("One of the points is not on the board: (" + start.X + "," + start.Y + ") (" + end.X + "," + end.Y + ")");
 
                 //Move right
-            } else if (start.x < end.x && PixelBoard[start.x + 1, start.y].Empty) {
-                NewMove = new Coord(start.x + 1, start.y);
-                UpdateVacancy(PixelBoard, start, NewMove);
-                PixelList.Add(NewMove);
-                Move(PixelBoard, NewMove, end, PixelList);
+            } else if (start.X < end.X && pixelBoard[start.X + 1, start.Y].Empty) {
+                newMove = new Coord(start.X + 1, start.Y);
+                UpdateVacancy(pixelBoard, start, newMove);
+                pixelList.Add(newMove);
+                Move(pixelBoard, newMove, end, pixelList);
 
                 //Move left
-            } else if (start.x > end.x && PixelBoard[start.x - 1, start.y].Empty) {
-                NewMove = new Coord(start.x - 1, start.y);
-                UpdateVacancy(PixelBoard, start, NewMove);
-                PixelList.Add(NewMove);
-                Move(PixelBoard, NewMove, end, PixelList);
+            } else if (start.X > end.X && pixelBoard[start.X - 1, start.Y].Empty) {
+                newMove = new Coord(start.X - 1, start.Y);
+                UpdateVacancy(pixelBoard, start, newMove);
+                pixelList.Add(newMove);
+                Move(pixelBoard, newMove, end, pixelList);
 
                 //Move down
-            } else if (start.y < end.y && PixelBoard[start.x, start.y + 1].Empty) {
-                NewMove = new Coord(start.x, start.y + 1);
-                UpdateVacancy(PixelBoard, start, NewMove);
-                PixelList.Add(NewMove);
-                Move(PixelBoard, NewMove, end, PixelList);
+            } else if (start.Y < end.Y && pixelBoard[start.X, start.Y + 1].Empty) {
+                newMove = new Coord(start.X, start.Y + 1);
+                UpdateVacancy(pixelBoard, start, newMove);
+                pixelList.Add(newMove);
+                Move(pixelBoard, newMove, end, pixelList);
 
                 //Move up
-            } else if (start.y > end.y && PixelBoard[start.x, start.y - 1].Empty) {
-                NewMove = new Coord(start.x, start.y - 1);
-                UpdateVacancy(PixelBoard, start, NewMove);
-                PixelList.Add(NewMove);
-                Move(PixelBoard, NewMove, end, PixelList);
+            } else if (start.Y > end.Y && pixelBoard[start.X, start.Y - 1].Empty) {
+                newMove = new Coord(start.X, start.Y - 1);
+                UpdateVacancy(pixelBoard, start, newMove);
+                pixelList.Add(newMove);
+                Move(pixelBoard, newMove, end, pixelList);
 
             } else {
-                Console.WriteLine("Something happened at point (" + start.x + "," + start.y + ")");
+                Console.WriteLine("Something happened at point (" + start.X + "," + start.Y + ")");
                 Console.WriteLine("The electrode path so far: ");
-                FindElectrodes(PixelBoard, PixelList);
-                FindElectrodes(PixelBoard, PixelList);
+                FindElectrodes(pixelBoard, pixelList);
+                FindElectrodes(pixelBoard, pixelList);
             }
         }
 
-        public static bool ValidateOnBoard(Pixels[,] PixelBoard, Coord check) {
-            if (check.x < PixelBoard.GetLength(0) && check.y < PixelBoard.GetLength(1) && check.x >= 0 && check.y >= 0) {
+        public static bool ValidateOnBoard(Pixels[,] pixelBoard, Coord check) {
+            if (check.X < pixelBoard.GetLength(0) && check.Y < pixelBoard.GetLength(1) && check.X >= 0 && check.Y >= 0) {
                 return true;
             }
             return false;
         }
 
-        public static void UpdateVacancy(Pixels[,] PixelBoard, Coord old, Coord neww) {
-            PixelBoard[old.x, old.y].Empty = true;
-            PixelBoard[neww.x, neww.y].Empty = false;
+        public static void UpdateVacancy(Pixels[,] pixelBoard, Coord previous, Coord current) {
+            pixelBoard[previous.X, previous.Y].Empty = true;
+            pixelBoard[current.X, current.Y].Empty = false;
         }
 
-        public static void FindElectrodes(Pixels[,] PixelBoard, List<Coord> listy) {
-            HashSet<int> EList = new HashSet<int>();
-            for (int i = 0; i < listy.Count; i++) {
-                EList.Add(PixelBoard[listy[i].x, listy[i].y].WhichElectrode);
+        public static void FindElectrodes(Pixels[,] pixelBoard, List<Coord> listOfPixels) {
+            HashSet<int> finalList = new HashSet<int>();
+            for (int i = 0; i < listOfPixels.Count; i++) {
+                finalList.Add(pixelBoard[listOfPixels[i].X, listOfPixels[i].Y].WhichElectrode);
             }
-            foreach (int that in EList) {
+            foreach (int that in finalList) {
                 Console.WriteLine(that);
             }
         }

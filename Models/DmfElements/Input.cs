@@ -1,21 +1,21 @@
-﻿namespace BachelorProject.Models.Dtos
+﻿namespace BachelorProject.Models.DmfElements
 {
     public class Input
     {
         public string Name { get; set; }
-        public int ID { get; set; }
-        public string InputID { get; set; }
+        public int Id { get; set; }
+        public string InputId { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
 
-        public static void PrintInputs(BachelorProject.Models.Dtos.Board Specs) {
+        public static void PrintInputs(Board specs) {
             System.Console.WriteLine("Board Inputs: ");
-            int len = Specs.Inputs.Count;
+            int len = specs.Inputs.Count;
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Input Name: " + Specs.Inputs[i].Name);
-                System.Console.WriteLine("ID: " + Specs.Inputs[i].ID);
-                System.Console.WriteLine("Input ID: " + Specs.Inputs[i].InputID);
-                System.Console.WriteLine("Input Position: (" + Specs.Inputs[i].PositionX + "," + Specs.Inputs[i].PositionY + ")");
+                System.Console.WriteLine("Input Name: " + specs.Inputs[i].Name);
+                System.Console.WriteLine("Id: " + specs.Inputs[i].Id);
+                System.Console.WriteLine("Input Id: " + specs.Inputs[i].InputId);
+                System.Console.WriteLine("Input Position: (" + specs.Inputs[i].PositionX + "," + specs.Inputs[i].PositionY + ")");
             }
             System.Console.WriteLine();
         }

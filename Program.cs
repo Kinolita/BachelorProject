@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
-using BachelorProject.Models.Dtos;
+using BachelorProject.Models.DmfElements;
 using BachelorProject.Models;
 using BachelorProject.Movement;
 
@@ -11,46 +11,42 @@ namespace BachelorProject
     {
         static void Main(string[] args) {
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board4x3.json");
-            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\boardWithEverything.json");
+            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\boardWithEverything.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\mazeBoard.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10Maze.json");
-            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
+            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
 
 
-            var BoardSpecs = JsonConvert.DeserializeObject<Board>(theStringToEndAllStrings);
-            Pixels[,] PixelBoard = Pixels.Create(BoardSpecs);
+            var boardSpecs = JsonConvert.DeserializeObject<Board>(theStringToEndAllStrings);
+            Pixels[,] pixelBoard1 = Pixels.Create(boardSpecs);
 
             ////Print functions for each element of the loaded board
-            Information.PrintInformation(BoardSpecs);
-     
-            //A* routing on 3x4 maze
-            //Models.Coord starting = new Models.Coord(70, 5);
-            //Models.Coord ending = new Models.Coord(30, 15);
-            //10x10 maze
-            Models.Coord starting = new Models.Coord(5, 25);
-            Models.Coord ending = new Models.Coord(95, 65);
+            Information.PrintInformation(boardSpecs);
 
-
-            //testing input with electrodes vs coordinates
-            int startElec = 4;
-            int endElec = 3;
+            //combining buffer with routing droplets
+            int startElec = 0;
+            int endElec = 99;
             int dropletSize = 15;
-            Buffers.AddBuffer(PixelBoard, dropletSize);
-            InputHandler.CheckInputType(PixelBoard, startElec, endElec);
-            //Console.WriteLine("Starting point: (" + starting.x + "," + starting.y + ")");
-            //Console.WriteLine("Ending point: (" + ending.x + "," + ending.y + ")");
-            
-            //printBoard(PixelBoard);
-    
-            void printBoard(Pixels[,] PixelBoard) {
+            Buffers.AddBuffer(pixelBoard1, dropletSize);
+            InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+            Buffers.RemoveBuffer(pixelBoard1);
+            dropletSize = 5;
+            Buffers.AddBuffer(pixelBoard1, dropletSize);
+            InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+
+
+
+            printBoard(pixelBoard1);
+
+            void printBoard(Pixels[,] pixelBoard) {
                 Console.WriteLine("Printing the board:");
-                for (int j = 0; j < PixelBoard.GetLength(1); j++) {
+                for (int j = 0; j < pixelBoard.GetLength(1); j++) {
                     Console.Write("\n");
-                    for (int k = 0; k < PixelBoard.GetLength(0); k++) {
-                        if (PixelBoard[k, j].Empty == false && PixelBoard[k, j].BlockageType == "Buffer") {
+                    for (int k = 0; k < pixelBoard.GetLength(0); k++) {
+                        if (pixelBoard[k, j].Empty == false && pixelBoard[k, j].BlockageType == "Buffer") {
                             Console.Write("B");
-                        } else if (PixelBoard[k, j].Empty == false) {
+                        } else if (pixelBoard[k, j].Empty == false) {
                             Console.Write("X");
                         } else { Console.Write("o"); }
                     }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BachelorProject.Movement
 {
@@ -27,14 +26,16 @@ namespace BachelorProject.Movement
 
             //C# code found at:
             //https://dotnetcoretutorials.com/2020/07/25/a-search-pathfinding-algorithm-in-c/
-            public static void AStar(Pixels[,] PixelBoard, Coord starting, Coord ending) {
-                var start = new Tile();
-                start.X = starting.x;
-                start.Y = starting.y;
+            public static void AStar(Pixels[,] pixelBoard, Coord starting, Coord ending) {
+                var start = new Tile {
+                    X = starting.X,
+                    Y = starting.Y
+                };
 
-                var finish = new Tile();
-                finish.X = ending.x;
-                finish.Y = ending.y;
+                var finish = new Tile {
+                    X = ending.X,
+                    Y = ending.Y
+                };
                 start.SetDistance(finish.X, finish.Y);
                 Console.WriteLine("Start: " + start.X + "," + start.Y + " END: " + finish.X + "," + finish.Y);
 
@@ -42,7 +43,7 @@ namespace BachelorProject.Movement
                 activeTiles.Add(start);
                 var visitedTiles = new List<Tile>();
 
-                static List<Tile> GetWalkableTiles(Pixels[,] PixelBoard, Tile currentTile, Tile targetTile) {
+                static List<Tile> GetWalkableTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile) {
                     var possibleTiles = new List<Tile>() {
                         new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
                         new Tile { X = currentTile.X, Y = currentTile.Y + 1, Parent = currentTile, Cost = currentTile.Cost + 1},
@@ -51,14 +52,14 @@ namespace BachelorProject.Movement
 
                     possibleTiles.ForEach(tile => tile.SetDistance(targetTile.X, targetTile.Y));
 
-                    var maxX = PixelBoard.GetLength(0);
-                    var maxY = PixelBoard.GetLength(1);
+                    var maxX = pixelBoard.GetLength(0);
+                    var maxY = pixelBoard.GetLength(1);
 
                     return possibleTiles
                             .Where(tile => tile.X >= 0 && tile.X < maxX)
                             .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            .Where(tile => Blockages.DropletBubbleCheck(PixelBoard, new Coord(tile.X, tile.Y)) == true)
-                            .Where(tile => PixelBoard[tile.X, tile.Y].Empty == true || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
+                            .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y)))
+                            .Where(tile => pixelBoard[tile.X, tile.Y].Empty || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                             .ToList();
                 }
 
@@ -73,12 +74,12 @@ namespace BachelorProject.Movement
                         //We found the destination and we can be sure (Because the the OrderBy above)
                         //That it's the most low cost option. 
                         var tile = checkTile;
-                        List<Coord> PixelList = new List<Coord>();
+                        List<Coord> pixelList = new List<Coord>();
                         while (true) {
-                            PixelList.Insert(0, new Coord(tile.X, tile.Y));
+                            pixelList.Insert(0, new Coord(tile.X, tile.Y));
                             tile = tile.Parent;
                             if (tile == null) {
-                                BasicRouting.FindElectrodes(PixelBoard, PixelList);
+                                BasicRouting.FindElectrodes(pixelBoard, pixelList);
                                 return;
                             }
                         }
@@ -87,7 +88,7 @@ namespace BachelorProject.Movement
                     visitedTiles.Add(checkTile);
                     activeTiles.Remove(checkTile);
 
-                    var walkableTiles = GetWalkableTiles(PixelBoard, checkTile, finish);
+                    var walkableTiles = GetWalkableTiles(pixelBoard, checkTile, finish);
 
                     foreach (var walkableTile in walkableTiles) {
                         //We have already visited this tile so we don't need to do so again!

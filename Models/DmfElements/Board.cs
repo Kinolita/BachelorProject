@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BachelorProject;
 
-namespace BachelorProject.Models.Dtos
+namespace BachelorProject.Models.DmfElements
 {
     public class Board
     {
