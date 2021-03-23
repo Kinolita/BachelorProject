@@ -4,9 +4,8 @@ namespace BachelorProject.Models
 {
     public class PolygonPoints
     {
-        ////////////////////////////////inspired from......     include this with any imported code
-        // A C# program to check if a given point lies inside a given polygon 
-        // https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ 
+        // Inspired from https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ 
+        // This checks if a given point lies inside a given polygon 
 
         static int INF = 10000;
 

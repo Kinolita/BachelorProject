@@ -16,9 +16,7 @@ namespace BachelorProject.Movement
             var jMax = pixelBoard.GetLength(1);
             for (var k = 0; k < kMax; k++) {
                 for (var j = 0; j < jMax; j++) {
-
                     if ((pixelBoard[k, j].Empty == false && pixelBoard[k, j].BlockageType != "Buffer") || k == 0 || j == 0 || k == kMax - 1 || j == jMax - 1) {
-
                         //cycling through surrounding pixels
                         for (int i = -buff; i <= buff; i++) {
                             for (int h = -buff; h <= buff; h++) {

@@ -5,8 +5,7 @@ using System.Linq;
 
 namespace BachelorProject.Movement
 {
-    ////////////////////////////////inspired from......     include this with any imported code
-
+    // inspired from https://dotnetcoretutorials.com/2020/07/25/a-search-pathfinding-algorithm-in-c/
     public class AStarRouting
     {
         public class Tile
@@ -17,15 +16,10 @@ namespace BachelorProject.Movement
             public int Distance { get; set; }
             public int CostDistance => Cost + Distance;
             public Tile Parent { get; set; }
-
-            //The distance is essentially the estimated distance, ignoring walls to our target. 
-            //So how many tiles left and right, up and down, ignoring walls, to get there. 
             public void SetDistance(int targetX, int targetY) {
                 this.Distance = Math.Abs(targetX - X) + Math.Abs(targetY - Y);
             }
 
-            //C# code found at:
-            //https://dotnetcoretutorials.com/2020/07/25/a-search-pathfinding-algorithm-in-c/
             public static void AStar(Pixels[,] pixelBoard, Coord starting, Coord ending) {
                 var start = new Tile {
                     X = starting.X,
@@ -37,13 +31,12 @@ namespace BachelorProject.Movement
                     Y = ending.Y
                 };
                 start.SetDistance(finish.X, finish.Y);
-                Console.WriteLine("Start: " + start.X + "," + start.Y + " END: " + finish.X + "," + finish.Y);
+                Console.WriteLine("Start: " + start.X + "," + start.Y + " End: " + finish.X + "," + finish.Y);
 
-                var activeTiles = new List<Tile>();
-                activeTiles.Add(start);
+                var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
 
-                static List<Tile> GetWalkableTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile) {
+                static List<Tile> GetPossibleTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile) {
                     var possibleTiles = new List<Tile>() {
                         new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
                         new Tile { X = currentTile.X, Y = currentTile.Y + 1, Parent = currentTile, Cost = currentTile.Cost + 1},
@@ -63,7 +56,6 @@ namespace BachelorProject.Movement
                             .ToList();
                 }
 
-                //This is where we created the map from our previous step etc. 
                 while (activeTiles.Any()) {
                     var checkTile = activeTiles.OrderBy(x => x.CostDistance).First();
 
@@ -88,14 +80,13 @@ namespace BachelorProject.Movement
                     visitedTiles.Add(checkTile);
                     activeTiles.Remove(checkTile);
 
-                    var walkableTiles = GetWalkableTiles(pixelBoard, checkTile, finish);
+                    var walkableTiles = GetPossibleTiles(pixelBoard, checkTile, finish);
 
                     foreach (var walkableTile in walkableTiles) {
-                        //We have already visited this tile so we don't need to do so again!
-                        if (visitedTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y))
-                            continue;
+                        //When the tile has already been visited
+                        if (visitedTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) continue;
 
-                        //It's already in the active list, but that's OK, maybe this new tile has a better value (e.g. We might zigzag earlier but this is now straighter). 
+                        //When the tile is already active (A zigzag path might become straighter). 
                         if (activeTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) {
                             var existingTile = activeTiles.First(x => x.X == walkableTile.X && x.Y == walkableTile.Y);
                             if (existingTile.CostDistance > checkTile.CostDistance) {
@@ -103,12 +94,17 @@ namespace BachelorProject.Movement
                                 activeTiles.Add(walkableTile);
                             }
                         } else {
-                            //We've never seen this tile before so add it to the list. 
+                            //When the tile is completely new 
                             activeTiles.Add(walkableTile);
                         }
                     }
                 }
                 Console.WriteLine("No Path Found!");
+                Console.WriteLine("The pixel route so far: ");
+                foreach (var tilesSoFar in visitedTiles)
+                {
+                    Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
+                }
             }
         }
     }

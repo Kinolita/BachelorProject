@@ -14,6 +14,8 @@ namespace BachelorProject
         //Output.PrintOutputs(boardSpecs);
         //Droplet.PrintDroplets(boardSpecs);
         //Bubble.PrintBubbles(boardSpecs);
+        //Board.printBoard(pixelBoard1);
+
 
         //Dummy navigation on board4x3
         //Models.Coord starting = new Models.Coord(10, 15);
