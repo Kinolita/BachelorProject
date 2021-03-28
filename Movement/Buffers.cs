@@ -7,7 +7,7 @@ namespace BachelorProject.Movement
     {
         //this is actually almost identical to a method in BasicRouting
         static bool BufferValidate(int a, int max) {
-            if (a >= 0 && a < max) { return true; } else { return false; }
+            return a >= 0 && a < max;
         }
 
         public static void AddBuffer(Pixels[,] pixelBoard, double dropSize) {
@@ -34,10 +34,9 @@ namespace BachelorProject.Movement
         public static void RemoveBuffer(Pixels[,] pixelBoard) {
             for (int k = 0; k < pixelBoard.GetLength(0); k++) {
                 for (int j = 0; j < pixelBoard.GetLength(1); j++) {
-                    if (pixelBoard[k, j].BlockageType == "Buffer") {
-                        pixelBoard[k, j].Empty = true;
-                        pixelBoard[k, j].BlockageType = "";
-                    }
+                    if (pixelBoard[k, j].BlockageType != "Buffer") continue;
+                    pixelBoard[k, j].Empty = true;
+                    pixelBoard[k, j].BlockageType = "";
                 }
             }
         }

@@ -62,10 +62,7 @@ namespace BachelorProject.Movement
         }
 
         public static bool ValidateOnBoard(Pixels[,] pixelBoard, Coord check) {
-            if (check.X < pixelBoard.GetLength(0) && check.Y < pixelBoard.GetLength(1) && check.X >= 0 && check.Y >= 0) {
-                return true;
-            }
-            return false;
+            return check.X < pixelBoard.GetLength(0) && check.Y < pixelBoard.GetLength(1) && check.X >= 0 && check.Y >= 0;
         }
 
         public static void UpdateVacancy(Pixels[,] pixelBoard, Coord previous, Coord current) {

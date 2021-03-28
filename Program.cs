@@ -14,10 +14,10 @@ namespace BachelorProject
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\boardWithEverything.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\mazeBoard.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10Maze.json");
-            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
+            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\100x100.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\50x50.json");
-            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\30x30.json");
+            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\30x30.json");
 
 
 
@@ -30,12 +30,12 @@ namespace BachelorProject
 
             //combining buffer with routing droplets
             int startElec = 0;
-            int endElec = 899;
-            int dropletSize = 3;
+            int endElec = 99;
+            int dropletSize = 13;
             InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
-            //dropletSize = 5;
-            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
+            Board.printBoard(pixelBoard1);
+            dropletSize = 5;
+            InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
 
             //JSONCreation.Class1.SampleBoard("20x20", 20, 20, 10);
         }

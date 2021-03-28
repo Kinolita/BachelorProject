@@ -5,8 +5,7 @@ namespace BachelorProject.Movement
 {
     class InputHandler
     {
-        public static void CheckInputType(Pixels[,] pixelBoard, Coord start, Coord finish, int dropletSize)
-        {
+        public static void CheckInputType(Pixels[,] pixelBoard, Coord start, Coord finish, int dropletSize) {
             Buffers.RemoveBuffer(pixelBoard);
             Buffers.AddBuffer(pixelBoard, dropletSize);
             AStarRouting.Tile.AStar(pixelBoard, start, finish);

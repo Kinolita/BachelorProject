@@ -11,13 +11,10 @@ namespace BachelorProject.Models
 
         // Given 3 co-linear points p, q, r, the function checks if point q lies on line segment 'pr' 
         private static bool OnSegment(Coord p, Coord q, Coord r) {
-            if (q.X <= Math.Max(p.X, r.X) &&
-                q.X >= Math.Min(p.X, r.X) &&
-                q.Y <= Math.Max(p.Y, r.Y) &&
-                q.Y >= Math.Min(p.Y, r.Y)) {
-                return true;
-            }
-            return false;
+            return q.X <= Math.Max(p.X, r.X) &&
+                   q.X >= Math.Min(p.X, r.X) &&
+                   q.Y <= Math.Max(p.Y, r.Y) &&
+                   q.Y >= Math.Min(p.Y, r.Y);
         }
 
         // To find Orientation of ordered triplet (p, q, r). 

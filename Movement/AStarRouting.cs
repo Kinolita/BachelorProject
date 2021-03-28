@@ -70,10 +70,9 @@ namespace BachelorProject.Movement
                         while (true) {
                             pixelList.Insert(0, new Coord(tile.X, tile.Y));
                             tile = tile.Parent;
-                            if (tile == null) {
-                                BasicRouting.FindElectrodes(pixelBoard, pixelList);
-                                return;
-                            }
+                            if (tile != null) continue;
+                            BasicRouting.FindElectrodes(pixelBoard, pixelList);
+                            return;
                         }
                     }
 
@@ -89,10 +88,9 @@ namespace BachelorProject.Movement
                         //When the tile is already active (A zigzag path might become straighter). 
                         if (activeTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) {
                             var existingTile = activeTiles.First(x => x.X == walkableTile.X && x.Y == walkableTile.Y);
-                            if (existingTile.CostDistance > checkTile.CostDistance) {
-                                activeTiles.Remove(existingTile);
-                                activeTiles.Add(walkableTile);
-                            }
+                            if (existingTile.CostDistance <= checkTile.CostDistance) continue;
+                            activeTiles.Remove(existingTile);
+                            activeTiles.Add(walkableTile);
                         } else {
                             //When the tile is completely new 
                             activeTiles.Add(walkableTile);
@@ -101,8 +99,7 @@ namespace BachelorProject.Movement
                 }
                 Console.WriteLine("No Path Found!");
                 Console.WriteLine("The pixel route so far: ");
-                foreach (var tilesSoFar in visitedTiles)
-                {
+                foreach (var tilesSoFar in visitedTiles) {
                     Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
                 }
             }
