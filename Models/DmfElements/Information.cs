@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace BachelorProject.Models.DmfElements
 {
@@ -10,21 +11,23 @@ namespace BachelorProject.Models.DmfElements
         public string PlatformType { get; set; }
         [JsonProperty("platform_ID")]
         public string PlatformId { get; set; }
+        [JsonProperty("sizeX")]
         public int SizeX { get; set; }
+        [JsonProperty("sizeY")]
         public int SizeY { get; set; }
 
         public static void PrintInformation(Board specs) {
-            System.Console.WriteLine("Board Specifications: ");
+            Console.WriteLine("Board Specifications: ");
             int len = specs.Information.Count;
 
             //really there should be no need for the for loop as there should only be one block of information
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Platform Name: " + specs.Information[i].PlatformName);
-                System.Console.WriteLine("Platform Type: " + specs.Information[i].PlatformType);
-                System.Console.WriteLine("Platform Id: " + specs.Information[i].PlatformId);
-                System.Console.WriteLine("Platform Size: " + specs.Information[i].SizeX + " by " + specs.Information[i].SizeY);
+                Console.WriteLine("Platform name: " + specs.Information[i].PlatformName);
+                Console.WriteLine("Platform type: " + specs.Information[i].PlatformType);
+                Console.WriteLine("Platform ID: " + specs.Information[i].PlatformId);
+                Console.WriteLine("Platform Size: " + specs.Information[i].SizeX + " by " + specs.Information[i].SizeY);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

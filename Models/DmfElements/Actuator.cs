@@ -1,29 +1,31 @@
-﻿namespace BachelorProject.Models.DmfElements
+﻿using System;
+
+namespace BachelorProject.Models.DmfElements
 
 {
     public class Actuator
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
-        public string ActuatorId { get; set; }
-        public string Type { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
-        public int SizeX { get; set; }
-        public int SizeY { get; set; }
+        public string name { get; set; }
+        public int ID { get; set; }
+        public string actuatorId { get; set; }
+        public string type { get; set; }
+        public int positionX { get; set; }
+        public int positionY { get; set; }
+        public int sizeX { get; set; }
+        public int sizeY { get; set; }
 
         public static void PrintActuators(Board specs) {
             int len = specs.Actuators.Count;
-            System.Console.WriteLine("Number of actuators on board: " + len);
+            Console.WriteLine("Number of actuators on board: " + len);
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Actuator Name: " + specs.Actuators[i].Name);
-                System.Console.WriteLine("Id: " + specs.Actuators[i].Id);
-                System.Console.WriteLine("Actuator Id: " + specs.Actuators[i].ActuatorId);
-                System.Console.WriteLine("Actuator Type " + specs.Actuators[i].Type);
-                System.Console.WriteLine("Actuator Position: (" + specs.Actuators[i].PositionX + "," + specs.Actuators[i].PositionY + ")");
-                System.Console.WriteLine("Actuator Size: " + specs.Actuators[i].SizeX + " by " + specs.Actuators[i].SizeY);
+                Console.WriteLine("Actuator name: " + specs.Actuators[i].name);
+                Console.WriteLine("ID: " + specs.Actuators[i].ID);
+                Console.WriteLine("Actuator ID: " + specs.Actuators[i].actuatorId);
+                Console.WriteLine("Actuator type " + specs.Actuators[i].type);
+                Console.WriteLine("Actuator Position: (" + specs.Actuators[i].positionX + "," + specs.Actuators[i].positionY + ")");
+                Console.WriteLine("Actuator Size: " + specs.Actuators[i].sizeX + " by " + specs.Actuators[i].sizeY);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

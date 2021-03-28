@@ -1,4 +1,6 @@
-﻿namespace BachelorProject.Models.DmfElements
+﻿using System;
+
+namespace BachelorProject.Models.DmfElements
 {
     public class Sensor
     {
@@ -13,16 +15,16 @@
 
         public static void PrintSensors(Board specs) {
             int len = specs.Sensors.Count;
-            System.Console.WriteLine("Number of sensors on board: " + len);
+            Console.WriteLine("Number of sensors on board: " + len);
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Sensor Name: " + specs.Sensors[i].Name);
-                System.Console.WriteLine("Id: " + specs.Sensors[i].Id);
-                System.Console.WriteLine("Sensor Id: " + specs.Sensors[i].SensorId);
-                System.Console.WriteLine("Sensor Type " + specs.Sensors[i].Type);
-                System.Console.WriteLine("Sensor Position: (" + specs.Sensors[i].PositionX + "," + specs.Sensors[i].PositionY + ")");
-                System.Console.WriteLine("Sensor Size: " + specs.Sensors[i].SizeX + " by " + specs.Sensors[i].SizeY);
+                Console.WriteLine("Sensor name: " + specs.Sensors[i].Name);
+                Console.WriteLine("ID: " + specs.Sensors[i].Id);
+                Console.WriteLine("Sensor ID: " + specs.Sensors[i].SensorId);
+                Console.WriteLine("Sensor type " + specs.Sensors[i].Type);
+                Console.WriteLine("Sensor Position: (" + specs.Sensors[i].PositionX + "," + specs.Sensors[i].PositionY + ")");
+                Console.WriteLine("Sensor Size: " + specs.Sensors[i].SizeX + " by " + specs.Sensors[i].SizeY);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

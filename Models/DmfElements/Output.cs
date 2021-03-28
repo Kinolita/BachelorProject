@@ -1,4 +1,6 @@
-﻿namespace BachelorProject.Models.DmfElements
+﻿using System;
+
+namespace BachelorProject.Models.DmfElements
 {
     public class Output
     {
@@ -9,15 +11,15 @@
         public int PositionY { get; set; }
 
         public static void PrintOutputs(Board specs) {
-            System.Console.WriteLine("Board Outputs: ");
+            Console.WriteLine("Board Outputs: ");
             int len = specs.Outputs.Count;
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Output Name: " + specs.Outputs[i].Name);
-                System.Console.WriteLine("Id: " + specs.Outputs[i].Id);
-                System.Console.WriteLine("Output Id: " + specs.Outputs[i].OutputId);
-                System.Console.WriteLine("Output Position: (" + specs.Outputs[i].PositionX + "," + specs.Outputs[i].PositionY + ")");
+                Console.WriteLine("Output name: " + specs.Outputs[i].Name);
+                Console.WriteLine("ID: " + specs.Outputs[i].Id);
+                Console.WriteLine("Output ID: " + specs.Outputs[i].OutputId);
+                Console.WriteLine("Output Position: (" + specs.Outputs[i].PositionX + "," + specs.Outputs[i].PositionY + ")");
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

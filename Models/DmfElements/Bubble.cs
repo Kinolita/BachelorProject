@@ -1,4 +1,6 @@
-﻿namespace BachelorProject.Models.DmfElements
+﻿using System;
+
+namespace BachelorProject.Models.DmfElements
 {
     public class Bubble
     {
@@ -11,14 +13,14 @@
 
         public static void PrintBubbles(Board specs) {
             int len = specs.Bubbles.Count;
-            System.Console.WriteLine("Number of bubbles on board: " + len);
+            Console.WriteLine("Number of bubbles on board: " + len);
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Droplet Name: " + specs.Bubbles[i].Name);
-                System.Console.WriteLine("Droplet Id: " + specs.Bubbles[i].Id);
-                System.Console.WriteLine("Droplet Position: (" + specs.Bubbles[i].PositionX + "," + specs.Bubbles[i].PositionY + ")");
-                System.Console.WriteLine("Droplet Size: " + specs.Bubbles[i].SizeX + " by " + specs.Bubbles[i].SizeY);
+                Console.WriteLine("Droplet name: " + specs.Bubbles[i].Name);
+                Console.WriteLine("Droplet ID: " + specs.Bubbles[i].Id);
+                Console.WriteLine("Droplet Position: (" + specs.Bubbles[i].PositionX + "," + specs.Bubbles[i].PositionY + ")");
+                Console.WriteLine("Droplet Size: " + specs.Bubbles[i].SizeX + " by " + specs.Bubbles[i].SizeY);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

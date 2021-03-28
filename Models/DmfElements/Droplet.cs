@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace BachelorProject.Models.DmfElements
 {
@@ -17,17 +18,17 @@ namespace BachelorProject.Models.DmfElements
 
         public static void PrintDroplets(Board specs) {
             int len = specs.Droplets.Count;
-            System.Console.WriteLine("Number of droplets on board: " + len);
+            Console.WriteLine("Number of droplets on board: " + len);
             for (int i = 0; i < len; i++) {
-                System.Console.WriteLine("Droplet Name: " + specs.Droplets[i].Name);
-                System.Console.WriteLine("Droplet Id: " + specs.Droplets[i].Id);
-                System.Console.WriteLine("Droplet Contents: " + specs.Droplets[i].SubstanceName);
-                System.Console.WriteLine("Droplet Position: (" + specs.Droplets[i].PositionX + "," + specs.Droplets[i].PositionY + ")");
-                System.Console.WriteLine("Droplet Size: " + specs.Droplets[i].SizeX + " by " + specs.Droplets[i].SizeY);
-                System.Console.WriteLine("Droplet Color: " + specs.Droplets[i].Color);
-                System.Console.WriteLine("Droplet Temperature: " + specs.Droplets[i].Temperature);
+                Console.WriteLine("Droplet name: " + specs.Droplets[i].Name);
+                Console.WriteLine("Droplet ID: " + specs.Droplets[i].Id);
+                Console.WriteLine("Droplet Contents: " + specs.Droplets[i].SubstanceName);
+                Console.WriteLine("Droplet Position: (" + specs.Droplets[i].PositionX + "," + specs.Droplets[i].PositionY + ")");
+                Console.WriteLine("Droplet Size: " + specs.Droplets[i].SizeX + " by " + specs.Droplets[i].SizeY);
+                Console.WriteLine("Droplet Color: " + specs.Droplets[i].Color);
+                Console.WriteLine("Droplet Temperature: " + specs.Droplets[i].Temperature);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

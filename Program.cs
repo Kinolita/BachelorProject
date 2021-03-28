@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 using System.IO;
 using BachelorProject.Models.DmfElements;
 using BachelorProject.Models;
@@ -13,43 +13,31 @@ namespace BachelorProject
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board4x3.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\boardWithEverything.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\mazeBoard.json");
-            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10.json");
             //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10Maze.json");
-            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
+            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\board10x10FatMaze.json");
+            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\100x100.json");
+            //string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\50x50.json");
+            string theStringToEndAllStrings = File.ReadAllText(Directory.GetCurrentDirectory() + @"\JSONBoards\30x30.json");
+
+
 
 
             var boardSpecs = JsonConvert.DeserializeObject<Board>(theStringToEndAllStrings);
+            //Console.WriteLine("Deserialized done");
             Pixels[,] pixelBoard1 = Pixels.Create(boardSpecs);
+            //Console.WriteLine("board creation done");
             Information.PrintInformation(boardSpecs);
 
             //combining buffer with routing droplets
             int startElec = 0;
-            int endElec = 15;
-            int dropletSize = 15;
+            int endElec = 899;
+            int dropletSize = 3;
             InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            dropletSize = 5;
-            InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-
             //Board.printBoard(pixelBoard1);
-            
+            //dropletSize = 5;
+            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
 
-            ////////////////example of throwing an exception//////////////////
-            //static void CheckInput(object that) {
-            //    Type t = that.GetType();
-            //    //if (!t.Equals(typeof(Coord)) && !t.Equals(typeof(int))) throw new ArgumentException("this ain't neither one");
-
-            //    try {
-            //        if (t.Equals(typeof(int))) {
-            //            Console.WriteLine("this is an electrode");
-            //        } else if (t.Equals(typeof(Coord))) {
-            //            Console.WriteLine("this is a coord");
-            //        } else {
-            //            throw new ArgumentException("this ain't neither one");
-            //        }
-            //    } catch (ArgumentException) {
-            //        Console.WriteLine("this ain't neither one");
-            //    }
-            //}
+            //JSONCreation.Class1.SampleBoard("20x20", 20, 20, 10);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using BachelorProject.Models.DmfElements;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BachelorProject.Models.DmfElements;
 
 namespace BachelorProject.Models
 {
@@ -8,7 +10,19 @@ namespace BachelorProject.Models
         public string BlockageType { get; set; }
         // (Contaminated, OoB, bubble, droplet, etc.)
         public int WhichElectrode { get; set; }
+        public int XRange { get; set; }
+        public int YRange { get; set; }
 
+        private static List<int> MaxRange(IList<IList<int>> corners, int axis) {
+            List<int> track = new List<int>();
+            List<int> theRange = new List<int>();
+            for (int i = 0; i < corners.Count; i++) {
+                track.Add(corners[i][axis]);
+            }
+            theRange.Add(track.Min());
+            theRange.Add(track.Max());
+            return theRange;
+        }
         public static Pixels[,] Create(Board specs) {
             Pixels[,] pixelBoard1 = new Pixels[specs.Information[0].SizeX, specs.Information[0].SizeY];
 
@@ -20,40 +34,94 @@ namespace BachelorProject.Models
                     pix.Empty = false;
                     pix.BlockageType = "OoB";
                     pix.WhichElectrode = -1;
+                }
+            }
 
-                    for (int m = 0; m < specs.Electrodes.Count; m++) {
-                        Coord p = new Coord(k, j);
+            //going through each of the electrodes
+            for (int m = 0; m < specs.Electrodes.Count; m++) {
+                //    // corners for rectangle electrodes
+                if (specs.Electrodes[m].shape == 0) {
+                    for (int p = specs.Electrodes[m].positionX; p < specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX; p++) {
+                        for (int q = specs.Electrodes[m].positionY; q < specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY; q++) {
+                            pixelBoard1[p, q].WhichElectrode = specs.Electrodes[m].ID;
+                            pixelBoard1[p, q].Empty = true;
+                            pixelBoard1[p, q].BlockageType = "";
+                            pixelBoard1[p, q].XRange = specs.Electrodes[m].sizeX;
+                            pixelBoard1[p, q].YRange = specs.Electrodes[m].sizeY;
+                        }
+                    }
+                    //corners for non-rectangle electrodes
+                } else if (specs.Electrodes[m].shape == 1) {
+                    int minX = MaxRange(specs.Electrodes[m].corners, 0)[0] + specs.Electrodes[m].positionX;
+                    int maxX = MaxRange(specs.Electrodes[m].corners, 0)[1] + specs.Electrodes[m].positionX;
+                    int minY = MaxRange(specs.Electrodes[m].corners, 1)[0] + specs.Electrodes[m].positionY;
+                    int maxY = MaxRange(specs.Electrodes[m].corners, 1)[1] + specs.Electrodes[m].positionY;
 
-                        // corners for rectangle electrodes
-                        if (specs.Electrodes[m].Shape == 0) {
-                            int n = 4;
-                            Coord[] polygon1 = {new Coord(specs.Electrodes[m].PositionX, specs.Electrodes[m].PositionY),
-                                new Coord(specs.Electrodes[m].PositionX + specs.Electrodes[m].SizeX-1, specs.Electrodes[m].PositionY),
-                                new Coord(specs.Electrodes[m].PositionX + specs.Electrodes[m].SizeX-1, specs.Electrodes[m].PositionY + specs.Electrodes[m].SizeY-1),
-                                new Coord(specs.Electrodes[m].PositionX, specs.Electrodes[m].PositionY + specs.Electrodes[m].SizeY-1)};
-                            if (PolygonPoints.IsInside(polygon1, n, p)) {
-                                pix.WhichElectrode = specs.Electrodes[m].Id;
-                                pix.Empty = true;
-                                pix.BlockageType = "";
+                    int nn = specs.Electrodes[m].corners.Count;
+                    Coord[] polygon2 = new Coord[nn];
+                    for (int i = 0; i < nn; i++) {
+                        polygon2[i].X = (specs.Electrodes[m].corners[i][0] + specs.Electrodes[m].positionX);
+                        polygon2[i].Y = (specs.Electrodes[m].corners[i][1] + specs.Electrodes[m].positionY);
+                    }
 
-                            }
-                            //corners for non-rectangle electrodes
-                        } else if (specs.Electrodes[m].Shape == 1) {
-                            int nn = specs.Electrodes[m].Corners.Count;
-                            Coord[] polygon2 = new Coord[nn];
-                            for (int i = 0; i < nn; i++) {
-                                polygon2[i].X = (specs.Electrodes[m].Corners[i][0] + specs.Electrodes[m].PositionX);
-                                polygon2[i].Y = (specs.Electrodes[m].Corners[i][1] + specs.Electrodes[m].PositionY);
-                            }
-                            if (PolygonPoints.IsInside(polygon2, nn, p)) {
-                                pix.WhichElectrode = specs.Electrodes[m].Id;
-                                pix.Empty = true;
-                                pix.BlockageType = "";
+                    for (int p = minX; p < maxX; p++) {
+                        for (int q = minY; q < maxY; q++) {
+                            Coord r = new Coord(p, q);
+                            if (PolygonPoints.IsInside(polygon2, nn, r)) {
+                                pixelBoard1[p, q].WhichElectrode = specs.Electrodes[m].ID;
+                                pixelBoard1[p, q].Empty = true;
+                                pixelBoard1[p, q].BlockageType = "";
+                                pixelBoard1[p, q].XRange = maxX - minX;
+                                pixelBoard1[p, q].YRange = maxY - minY;
                             }
                         }
                     }
                 }
             }
+
+            //// going through each pixel one at a time
+            //for (int k = 0; k < specs.Information[0].SizeX; k++) {
+            //    for (int j = 0; j < specs.Information[0].SizeY; j++) {
+            //        Pixels pix = new Pixels();
+            //        pixelBoard1[k, j] = pix;
+            //        pix.Empty = false;
+            //        pix.BlockageType = "OoB";
+            //        pix.WhichElectrode = -1;
+
+            //        //going through each of the electrodes
+            //        for (int m = 0; m < specs.Electrodes.Count; m++) {
+            //            Coord p = new Coord(k, j);
+
+            //            // corners for rectangle electrodes
+            //            if (specs.Electrodes[m].shape == 0) {
+            //                int n = 4;
+            //                Coord[] polygon1 = {new Coord(specs.Electrodes[m].positionX, specs.Electrodes[m].positionY),
+            //                    new Coord(specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX-1, specs.Electrodes[m].positionY),
+            //                    new Coord(specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX-1, specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY-1),
+            //                    new Coord(specs.Electrodes[m].positionX, specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY-1)};
+            //                if (PolygonPoints.IsInside(polygon1, n, p)) {
+            //                    pix.WhichElectrode = specs.Electrodes[m].ID;
+            //                    pix.Empty = true;
+            //                    pix.BlockageType = "";
+
+            //                }
+            //                //corners for non-rectangle electrodes
+            //            } else if (specs.Electrodes[m].shape == 1) {
+            //                int nn = specs.Electrodes[m].corners.Count;
+            //                Coord[] polygon2 = new Coord[nn];
+            //                for (int i = 0; i < nn; i++) {
+            //                    polygon2[i].X = (specs.Electrodes[m].corners[i][0] + specs.Electrodes[m].positionX);
+            //                    polygon2[i].Y = (specs.Electrodes[m].corners[i][1] + specs.Electrodes[m].positionY);
+            //                }
+            //                if (PolygonPoints.IsInside(polygon2, nn, p)) {
+            //                    pix.WhichElectrode = specs.Electrodes[m].ID;
+            //                    pix.Empty = true;
+            //                    pix.BlockageType = "";
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             //program can recognize but not successfully navigate around bubbles and droplets now
             //assigning vacancy(bubbles and droplets)
