@@ -23,7 +23,7 @@ namespace BachelorProject.JSONCreation
                     electrodeID = i,
                     shape = 0,
                     positionX = i%xLength * elecSize,
-                    positionY = Convert.ToInt32(i/yLength) * elecSize,
+                    positionY = Convert.ToInt32(i/xLength) * elecSize,
                     sizeX = elecSize,
                     sizeY = elecSize,
                     status = 0,

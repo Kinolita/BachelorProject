@@ -37,9 +37,9 @@ namespace BachelorProject.Models
                 }
             }
 
+            /////////////////New code//////////////////
             //going through each of the electrodes
             for (int m = 0; m < specs.Electrodes.Count; m++) {
-
                 switch (specs.Electrodes[m].shape) {
                     // rectangle electrodes
                     case 0:
@@ -80,56 +80,10 @@ namespace BachelorProject.Models
                         }
                         break;
                 }
-
-                //    // corners for rectangle electrodes
-                //if (specs.Electrodes[m].shape == 0) {
-                //    for (int p = specs.Electrodes[m].positionX; p < specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX; p++) {
-                //        for (int q = specs.Electrodes[m].positionY; q < specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY; q++) {
-                //            pixelBoard1[p, q].WhichElectrode = specs.Electrodes[m].ID;
-                //            pixelBoard1[p, q].Empty = true;
-                //            pixelBoard1[p, q].BlockageType = "";
-                //            pixelBoard1[p, q].XRange = specs.Electrodes[m].sizeX;
-                //            pixelBoard1[p, q].YRange = specs.Electrodes[m].sizeY;
-                //        }
-                //    }
-                //    //corners for non-rectangle electrodes
-                //} else if (specs.Electrodes[m].shape == 1) {
-                //    int minX = MaxRange(specs.Electrodes[m].corners, 0)[0] + specs.Electrodes[m].positionX;
-                //    int maxX = MaxRange(specs.Electrodes[m].corners, 0)[1] + specs.Electrodes[m].positionX;
-                //    int minY = MaxRange(specs.Electrodes[m].corners, 1)[0] + specs.Electrodes[m].positionY;
-                //    int maxY = MaxRange(specs.Electrodes[m].corners, 1)[1] + specs.Electrodes[m].positionY;
-
-                //    int nn = specs.Electrodes[m].corners.Count;
-                //    Coord[] polygon2 = new Coord[nn];
-                //    for (int i = 0; i < nn; i++) {
-                //        polygon2[i].X = (specs.Electrodes[m].corners[i][0] + specs.Electrodes[m].positionX);
-                //        polygon2[i].Y = (specs.Electrodes[m].corners[i][1] + specs.Electrodes[m].positionY);
-                //    }
-
-                //    for (int p = minX; p < maxX; p++) {
-                //        for (int q = minY; q < maxY; q++) {
-                //            Coord r = new Coord(p, q);
-                //            if (PolygonPoints.IsInside(polygon2, nn, r)) {
-                //                pixelBoard1[p, q].WhichElectrode = specs.Electrodes[m].ID;
-                //                pixelBoard1[p, q].Empty = true;
-                //                pixelBoard1[p, q].BlockageType = "";
-                //                pixelBoard1[p, q].XRange = maxX - minX;
-                //                pixelBoard1[p, q].YRange = maxY - minY;
-                //            }
-                //        }
-                //    }
-                //}
             }
 
+            /////////////////old version that cant do 100x100///////////////////////
             //// going through each pixel one at a time
-            //for (int k = 0; k < specs.Information[0].SizeX; k++) {
-            //    for (int j = 0; j < specs.Information[0].SizeY; j++) {
-            //        Pixels pix = new Pixels();
-            //        pixelBoard1[k, j] = pix;
-            //        pix.Empty = false;
-            //        pix.BlockageType = "OoB";
-            //        pix.WhichElectrode = -1;
-
             //        //going through each of the electrodes
             //        for (int m = 0; m < specs.Electrodes.Count; m++) {
             //            Coord p = new Coord(k, j);
@@ -165,28 +119,26 @@ namespace BachelorProject.Models
             //    }
             //}
 
-            //program can recognize but not successfully navigate around bubbles and droplets now
             //assigning vacancy(bubbles and droplets)
-            if (specs.Droplets != null) {
-                for (int m = 0; m < specs.Droplets.Count; m++) {
-                    for (int q = specs.Droplets[m].PositionX; q < specs.Droplets[m].PositionX + specs.Droplets[m].SizeX; q++) {
-                        for (int r = specs.Droplets[m].PositionY; r < specs.Droplets[m].PositionY + specs.Droplets[m].SizeY; r++) {
-                            pixelBoard1[q, r].Empty = false;
-                            pixelBoard1[q, r].BlockageType = "Droplet";
-                        }
+            if (specs.Droplets == null) return pixelBoard1;
+            foreach (var t in specs.Droplets)
+                for (int q = t.PositionX; q < t.PositionX + t.SizeX; q++) {
+                    for (int r = t.PositionY; r < t.PositionY + t.SizeY; r++) {
+                        pixelBoard1[q, r].Empty = false;
+                        pixelBoard1[q, r].BlockageType = "Droplet";
+                    }
+                }
+
+            if (specs.Bubbles == null) return pixelBoard1;
+            foreach (var t in specs.Bubbles) {
+                for (int q = t.PositionX; q < t.PositionX + t.SizeX; q++) {
+                    for (int r = t.PositionY; r < t.PositionY + t.SizeY; r++) {
+                        pixelBoard1[q, r].Empty = false;
+                        pixelBoard1[q, r].BlockageType = "Bubble";
                     }
                 }
             }
-            if (specs.Bubbles != null) {
-                for (int m = 0; m < specs.Bubbles.Count; m++) {
-                    for (int q = specs.Bubbles[m].PositionX; q < specs.Bubbles[m].PositionX + specs.Bubbles[m].SizeX; q++) {
-                        for (int r = specs.Bubbles[m].PositionY; r < specs.Bubbles[m].PositionY + specs.Bubbles[m].SizeY; r++) {
-                            pixelBoard1[q, r].Empty = false;
-                            pixelBoard1[q, r].BlockageType = "Bubble";
-                        }
-                    }
-                }
-            }
+
             return pixelBoard1;
         }
     }
