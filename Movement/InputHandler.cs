@@ -6,10 +6,8 @@ namespace BachelorProject.Movement
     class InputHandler
     {
         public static void CheckInputType(Pixels[,] pixelBoard, Coord start, Coord finish, int dropletSize) {
-            if (pixelBoard[0, 0].BlockageType != "Buffer") {
-                Buffers.RemoveBuffer(pixelBoard);
-                Buffers.AddBuffer(pixelBoard, dropletSize);
-            }
+            Buffers.RemoveBuffer(pixelBoard);
+            Buffers.AddBuffer(pixelBoard, dropletSize);
             AStarRouting.Tile.AStar(pixelBoard, start, finish);
         }
 
@@ -19,7 +17,7 @@ namespace BachelorProject.Movement
                 Buffers.AddBuffer(pixelBoard, dropletSize);
                 var startCoord = Coord.FindPixel(pixelBoard, start);
                 var finishCoord = Coord.FindPixel(pixelBoard, finish);
-                CheckInputType(pixelBoard, startCoord, finishCoord, dropletSize);
+                AStarRouting.Tile.AStar(pixelBoard, startCoord, finishCoord);
             } catch (Exception e) {
                 Console.WriteLine(e);
             }
@@ -44,6 +42,13 @@ namespace BachelorProject.Movement
                 CheckInputType(pixelBoard, startCoord, finish, dropletSize);
             } catch (Exception e) {
                 Console.WriteLine(e);
+            }
+        }
+
+
+        public static void SizeHandler(Pixels[,] pixelBoard, Coord start, int finish, int dropletSize) {
+            if (dropletSize > pixelBoard[start.X, start.Y].XRange || dropletSize > pixelBoard[start.X, start.Y].YRange) {
+
             }
         }
     }

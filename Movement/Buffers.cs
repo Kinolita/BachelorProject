@@ -11,20 +11,65 @@ namespace BachelorProject.Movement
         }
 
         public static void AddBuffer(Pixels[,] pixelBoard, double dropSize) {
+            if (dropSize > 2) { dropSize -= 2; }
             var buff = (int)Math.Ceiling(dropSize / 2);
             var kMax = pixelBoard.GetLength(0);
             var jMax = pixelBoard.GetLength(1);
             for (var k = 0; k < kMax; k++) {
                 for (var j = 0; j < jMax; j++) {
-                    if ((pixelBoard[k, j].Empty == false && pixelBoard[k, j].BlockageType != "Buffer") || k == 0 || j == 0 || k == kMax - 1 || j == jMax - 1) {
+
+
+                    //if ((!pixelBoard[k, j].Empty && pixelBoard[k, j].BlockageType != "Buffer")
+                    //    || k == 0 || j == 0 || k == kMax - 1 || j == jMax - 1) {
+                    //    //cycling through surrounding pixels
+                    //    for (int i = -buff; i <= buff; i++) {
+                    //        for (int h = -buff; h <= buff; h++) {
+                    //            if (BufferValidate(k + i, kMax) && BufferValidate(j + h, jMax) && pixelBoard[k + i, j + h].Empty) {
+                    //                pixelBoard[k + i, j + h].BlockageType = "Buffer";
+                    //                pixelBoard[k + i, j + h].Empty = false;
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+
+                    //if occupied but not a buffer
+                    if ((!pixelBoard[k, j].Empty && pixelBoard[k, j].BlockageType != "Buffer")) {
                         //cycling through surrounding pixels
                         for (int i = -buff; i <= buff; i++) {
                             for (int h = -buff; h <= buff; h++) {
+                                //check if on the board and empty
                                 if (BufferValidate(k + i, kMax) && BufferValidate(j + h, jMax) && pixelBoard[k + i, j + h].Empty) {
                                     pixelBoard[k + i, j + h].BlockageType = "Buffer";
                                     pixelBoard[k + i, j + h].Empty = false;
                                 }
                             }
+                        }
+                    }
+
+                    // if an edge and not occupied
+                    if (pixelBoard[k, j].Empty && k == 0) {
+                        for (int i = 0; i < buff; i++) {
+                            pixelBoard[k + i, j].BlockageType = "Buffer";
+                            pixelBoard[k + i, j].Empty = false;
+                        }
+                    }
+                    if (pixelBoard[k, j].Empty && j == 0) {
+                        for (int i = 0; i < buff; i++) {
+                            pixelBoard[k, j + i].BlockageType = "Buffer";
+                            pixelBoard[k, j + i].Empty = false;
+                        }
+                    }
+                    if (pixelBoard[k, j].Empty && k == kMax - 1) {
+                        for (int i = 0; i < buff; i++) {
+                            pixelBoard[k - i, j].BlockageType = "Buffer";
+                            pixelBoard[k - i, j].Empty = false;
+                        }
+                    }
+                    if (pixelBoard[k, j].Empty && j == jMax - 1) {
+                        for (int i = 0; i < buff; i++) {
+                            pixelBoard[k, j - i].BlockageType = "Buffer";
+                            pixelBoard[k, j - i].Empty = false;
                         }
                     }
                 }

@@ -46,6 +46,7 @@ namespace BachelorProject.Models.DmfElements
                     }
                 }
             }
+            Console.WriteLine();
         }
     }
 }
