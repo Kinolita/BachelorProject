@@ -38,8 +38,9 @@ namespace BachelorProject.JSONCreation
             };
 
             string stringJson = JsonConvert.SerializeObject((newJson));
-            string path = Directory.GetCurrentDirectory() + @"\JSONBoards\" + boardName + ".json";
-            using (TextWriter tw = new StreamWriter(path)) {
+            string path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\"));
+            string path2 = path + @"\JSONBoards\" + boardName + ".json";
+            using (TextWriter tw = new StreamWriter(path2)) {
                 tw.WriteLine(stringJson);
             }
         }

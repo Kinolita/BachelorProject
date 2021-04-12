@@ -37,7 +37,6 @@ namespace BachelorProject.Models
                 }
             }
 
-            /////////////////New code//////////////////
             //going through each of the electrodes
             for (int m = 0; m < specs.Electrodes.Count; m++) {
                 switch (specs.Electrodes[m].shape) {
@@ -81,43 +80,6 @@ namespace BachelorProject.Models
                         break;
                 }
             }
-
-            /////////////////old version that cant do 100x100///////////////////////
-            //// going through each pixel one at a time
-            //        //going through each of the electrodes
-            //        for (int m = 0; m < specs.Electrodes.Count; m++) {
-            //            Coord p = new Coord(k, j);
-
-            //            // corners for rectangle electrodes
-            //            if (specs.Electrodes[m].shape == 0) {
-            //                int n = 4;
-            //                Coord[] polygon1 = {new Coord(specs.Electrodes[m].positionX, specs.Electrodes[m].positionY),
-            //                    new Coord(specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX-1, specs.Electrodes[m].positionY),
-            //                    new Coord(specs.Electrodes[m].positionX + specs.Electrodes[m].sizeX-1, specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY-1),
-            //                    new Coord(specs.Electrodes[m].positionX, specs.Electrodes[m].positionY + specs.Electrodes[m].sizeY-1)};
-            //                if (PolygonPoints.IsInside(polygon1, n, p)) {
-            //                    pix.WhichElectrode = specs.Electrodes[m].ID;
-            //                    pix.Empty = true;
-            //                    pix.BlockageType = "";
-
-            //                }
-            //                //corners for non-rectangle electrodes
-            //            } else if (specs.Electrodes[m].shape == 1) {
-            //                int nn = specs.Electrodes[m].corners.Count;
-            //                Coord[] polygon2 = new Coord[nn];
-            //                for (int i = 0; i < nn; i++) {
-            //                    polygon2[i].X = (specs.Electrodes[m].corners[i][0] + specs.Electrodes[m].positionX);
-            //                    polygon2[i].Y = (specs.Electrodes[m].corners[i][1] + specs.Electrodes[m].positionY);
-            //                }
-            //                if (PolygonPoints.IsInside(polygon2, nn, p)) {
-            //                    pix.WhichElectrode = specs.Electrodes[m].ID;
-            //                    pix.Empty = true;
-            //                    pix.BlockageType = "";
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
 
             //assigning vacancy(bubbles and droplets)
             if (specs.Droplets == null) return pixelBoard1;
