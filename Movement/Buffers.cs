@@ -15,13 +15,12 @@ namespace BachelorProject.Movement
             //if (dropSize > 2) { dropSize -= 2; }
             if (dropSize > 0) { dropSize -= 1; }
 
-            var buff = 0;
             var kMax = pixelBoard.GetLength(0);
             var jMax = pixelBoard.GetLength(1);
 
             //even droplet size
             if (dropSize % 2 == 0) {
-                buff = (int)dropSize / 2;
+                var buff = (int)dropSize / 2;
                 for (var k = 0; k < kMax; k++) {
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer
@@ -68,8 +67,7 @@ namespace BachelorProject.Movement
 
                 //odd droplet size
             } else {
-                buff = (int)Math.Floor(dropSize / 2);
-                Console.WriteLine("buff: " + buff);
+                var buff = (int)Math.Floor(dropSize / 2);
                 for (var k = 0; k < kMax; k++) {
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BachelorProject.Models;
 
 namespace BachelorProject.Movement
@@ -8,7 +9,8 @@ namespace BachelorProject.Movement
         public static void CheckInputType(Pixels[,] pixelBoard, Coord start, Coord finish, int dropletSize) {
             Buffers.RemoveBuffer(pixelBoard);
             Buffers.AddBuffer(pixelBoard, dropletSize);
-            AStarRouting.Tile.AStar(pixelBoard, start, finish);
+            List<Coord> that = AStarRouting.Tile.AStar(pixelBoard, start, finish);
+            BasicRouting.FindElectrodes(pixelBoard, that, dropletSize);
         }
 
         public static void CheckInputType(Pixels[,] pixelBoard, int start, int finish, int dropletSize) {
@@ -17,7 +19,8 @@ namespace BachelorProject.Movement
                 Buffers.AddBuffer(pixelBoard, dropletSize);
                 var startCoord = Coord.FindPixel(pixelBoard, start);
                 var finishCoord = Coord.FindPixel(pixelBoard, finish);
-                AStarRouting.Tile.AStar(pixelBoard, startCoord, finishCoord);
+                List<Coord> that = AStarRouting.Tile.AStar(pixelBoard, startCoord, finishCoord);
+                BasicRouting.FindElectrodes(pixelBoard, that, dropletSize);
             } catch (Exception e) {
                 Console.WriteLine(e);
             }
@@ -48,7 +51,7 @@ namespace BachelorProject.Movement
 
         public static void SizeHandler(Pixels[,] pixelBoard, Coord start, int finish, int dropletSize) {
             if (dropletSize > pixelBoard[start.X, start.Y].XRange || dropletSize > pixelBoard[start.X, start.Y].YRange) {
-
+                //TODO
             }
         }
     }

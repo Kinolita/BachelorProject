@@ -20,7 +20,8 @@ namespace BachelorProject.Movement
                 this.Distance = Math.Abs(targetX - X) + Math.Abs(targetY - Y);
             }
 
-            public static void AStar(Pixels[,] pixelBoard, Coord starting, Coord ending) {
+            public static List<Coord> AStar(Pixels[,] pixelBoard, Coord starting, Coord ending) {
+                List<Coord> pixelList = new List<Coord>();
                 var start = new Tile {
                     X = starting.X,
                     Y = starting.Y
@@ -60,19 +61,16 @@ namespace BachelorProject.Movement
                     var checkTile = activeTiles.OrderBy(x => x.CostDistance).First();
 
                     if (checkTile.X == finish.X && checkTile.Y == finish.Y) {
+                        //We found the destination!!!! 
+                        //Order by ensures that it's the most low cost option. 
                         Console.WriteLine("Destination found using A*");
-                        //We can actually loop through the parents of each tile to find our exact path which we will show shortly. 
 
-                        //We found the destination and we can be sure (Because the the OrderBy above)
-                        //That it's the most low cost option. 
                         var tile = checkTile;
-                        List<Coord> pixelList = new List<Coord>();
                         while (true) {
                             pixelList.Insert(0, new Coord(tile.X, tile.Y));
                             tile = tile.Parent;
                             if (tile != null) continue;
-                            BasicRouting.FindElectrodes(pixelBoard, pixelList);
-                            return;
+                            return pixelList;
                         }
                     }
 
@@ -102,6 +100,8 @@ namespace BachelorProject.Movement
                 foreach (var tilesSoFar in visitedTiles) {
                     Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
                 }
+
+                return pixelList;
             }
         }
     }
