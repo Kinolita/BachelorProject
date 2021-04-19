@@ -29,11 +29,11 @@ namespace BachelorProject
             Pixels[,] pixelBoard1 = Pixels.Create(boardSpecs);
             Information.PrintInformation(boardSpecs);
 
-            //combining buffer with routing droplets
             //node: droplets larger than 1 electrode should start away from the border
             int startElec = 33;
             int endElec = 606;
-            int dropletSize = 16;
+
+            int dropletSize = 9;
             Console.WriteLine("Droplet size: " + dropletSize);
             InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
             //Board.printBoard(pixelBoard1);

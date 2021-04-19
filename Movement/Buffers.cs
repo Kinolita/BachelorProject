@@ -11,10 +11,7 @@ namespace BachelorProject.Movement
         }
 
         public static void AddBuffer(Pixels[,] pixelBoard, double dropSize) {
-            //possibly change this to 1
-            //if (dropSize > 2) { dropSize -= 2; }
             if (dropSize > 0) { dropSize -= 1; }
-
             var kMax = pixelBoard.GetLength(0);
             var jMax = pixelBoard.GetLength(1);
 
