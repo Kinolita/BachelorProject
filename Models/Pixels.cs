@@ -103,6 +103,86 @@ namespace BachelorProject.Models
 
             return pixelBoard1;
         }
+
+        //public static Pixels[,] ScaleDown(Pixels[,] pixelBoard) {
+        //    int minRange = pixelBoard[0, 0].XRange;
+        //    //int minYrange = pixelBoard[0, 0].YRange;
+        //    int minDropletBubbleSize = 0;
+
+        //    for (var k = 0; k < pixelBoard.GetLength(0); k++) {
+        //        for (var j = 0; j < pixelBoard.GetLength(1); j++) {
+        //            if (pixelBoard[k, j].XRange < minRange) { minRange = pixelBoard[k, j].XRange; }
+        //            if (pixelBoard[k, j].YRange < minRange) { minRange = pixelBoard[k, j].YRange; }
+
+        //            if (!pixelBoard[k, j].Empty && (pixelBoard[k, j].BlockageType == "Bubble" ||
+        //                                            pixelBoard[k, j].BlockageType == "Droplet")) {
+        //                int temp = 0;
+        //                while (pixelBoard[k, j + temp].BlockageType == "Bubble" || pixelBoard[k, j].BlockageType == "Droplet") {
+        //                    temp += 1;
+        //                }
+        //                if (temp < minDropletBubbleSize) { minDropletBubbleSize = temp; }
+        //                break;
+        //            }
+        //            //actuators and sensors are not present at the pixel level
+        //            // how should those be considered for scaling down?
+        //        }
+        //    }
+
+        //    //GCD
+        //    while (minDropletBubbleSize != 0) {
+        //        int remainder = minRange % minDropletBubbleSize;
+        //        minRange = minDropletBubbleSize;
+        //        minDropletBubbleSize = remainder;
+        //    }
+
+        //    if (minRange > 4) {
+        //        Pixels[,] pixelBoard2 = new Pixels[pixelBoard.GetLength(0) / minRange, pixelBoard.GetLength(1) / minRange];
+        //        // going through each pixel one at a time
+        //        for (int k = 0; k < pixelBoard2.GetLength(0); k++) {
+        //            for (int j = 0; j < pixelBoard2.GetLength(1); j++) {
+        //                Pixels pix = new Pixels();
+        //                pixelBoard2[k, j] = pix;
+        //                pix.Empty = pixelBoard[k,j].Empty;
+        //                pix.BlockageType = pixelBoard[k, j].BlockageType;
+        //                pix.WhichElectrode = -1;
+        //            }
+        //        }
+        //    }
+        //    return pixelBoard2;
+        //}
+
+
+        public static Pixels[,] ScaleDown(Pixels[,] pixelBoard) {
+        //this will only work for boards with even dimensioned electrodes
+            List<Coord> square = new List<Coord>();
+            square.Add(new Coord(1, 0));
+            square.Add(new Coord(0, 1));
+            square.Add(new Coord(1, 1));
+            bool scalable = true;
+
+            for (var k = 0; k < pixelBoard.GetLength(0); k += 2) {
+                for (var j = 0; j < pixelBoard.GetLength(1); j += 2) {
+                    foreach (var corner in square) {
+                        if (pixelBoard[k, j].Empty != pixelBoard[k + corner.X, j + corner.Y].Empty ||
+                            pixelBoard[k, j].WhichElectrode != pixelBoard[k + corner.X, j + corner.Y].WhichElectrode ||
+                            pixelBoard[k, j].BlockageType != pixelBoard[k + corner.X, j + corner.Y].BlockageType)
+                            scalable = false;
+                    }
+                }
+            }
+
+            if (scalable) {
+                Pixels[,] pixelBoard2 = new Pixels[pixelBoard.GetLength(0) / 2, pixelBoard.GetLength(1) / 2];
+                for (var k = 0; k < pixelBoard2.GetLength(0); k ++) {
+                    for (var j = 0; j < pixelBoard2.GetLength(1); j ++) {
+                        pixelBoard2[k, j] = pixelBoard[k * 2, j * 2];
+                    }
+                }
+                return pixelBoard2;
+                // still need to add in preexisting droplets and input/outputs
+            }
+            return pixelBoard;
+        }
     }
 }
 

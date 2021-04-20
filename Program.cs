@@ -33,32 +33,27 @@ namespace BachelorProject
             int startElec = 33;
             int endElec = 606;
 
-            int dropletSize = 9;
-            Console.WriteLine("Droplet size: " + dropletSize);
-            InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
-            //dropletSize = 10;
+            int dropletSize = 2;
             //Console.WriteLine("Droplet size: " + dropletSize);
-            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
+            InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
+            ////Board.printBoard(pixelBoard1);
+            dropletSize = 2;
+            //Console.WriteLine("Droplet size: " + dropletSize);
+            Pixels[,] pixelBoard2 = Pixels.ScaleDown(pixelBoard1);
+            InputHandler.CheckInputType(pixelBoard2, startElec, endElec, dropletSize);
+            ////Board.printBoard(pixelBoard1);
             //dropletSize = 11;
             //Console.WriteLine("Droplet size: " + dropletSize);
             //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
             //Board.printBoard(pixelBoard1);
 
-            //dropletSize = 20;
-            //Console.WriteLine("Droplet size: " + dropletSize);
-            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
-            //dropletSize = 21;
-            //Console.WriteLine("Droplet size: " + dropletSize);
-            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
-            //dropletSize = 22;
-            //Console.WriteLine("Droplet size: " + dropletSize);
-            //InputHandler.CheckInputType(pixelBoard1, startElec, endElec, dropletSize);
-            //Board.printBoard(pixelBoard1);
 
+
+            dropletSize = 2;
+            Console.WriteLine("Droplet size: " + dropletSize);
+            //Pixels[,] pixelBoard2 = Pixels.ScaleDown(pixelBoard1);
+            Board.printBoard(pixelBoard2);
+            //InputHandler.CheckInputType(pixelBoard2, startElec, endElec, dropletSize);
 
             //JSONCreation.Class1.SampleBoard("whatisthis", 4, 5, 2);
         }
