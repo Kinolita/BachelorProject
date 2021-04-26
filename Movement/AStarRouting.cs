@@ -32,7 +32,7 @@ namespace BachelorProject.Movement
                     Y = ending.Y
                 };
                 start.SetDistance(finish.X, finish.Y);
-                Console.WriteLine("Start: " + start.X + "," + start.Y + " End: " + finish.X + "," + finish.Y);
+                //Console.WriteLine("Start: " + start.X + "," + start.Y + " End: " + finish.X + "," + finish.Y);
 
                 var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
@@ -63,7 +63,7 @@ namespace BachelorProject.Movement
                     if (checkTile.X == finish.X && checkTile.Y == finish.Y) {
                         //We found the destination!!!! 
                         //Order by ensures that it's the most low cost option. 
-                        Console.WriteLine("Destination found using A*");
+                        Console.WriteLine("Destination found!");
 
                         var tile = checkTile;
                         while (true) {
@@ -96,10 +96,10 @@ namespace BachelorProject.Movement
                     }
                 }
                 Console.WriteLine("No Path Found!");
-                Console.WriteLine("The pixel route so far: ");
-                foreach (var tilesSoFar in visitedTiles) {
-                    Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
-                }
+                //Console.WriteLine("The pixel route so far: ");
+                //foreach (var tilesSoFar in visitedTiles) {
+                //    Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
+                //}
 
                 return pixelList;
             }

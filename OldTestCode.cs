@@ -42,7 +42,7 @@ namespace BachelorProject
 
         //Console.WriteLine("Starting point: (" + starting.X + "," + starting.Y + ")");
         //Console.WriteLine("Ending point: (" + ending.X + "," + ending.Y + ")");
-        //BasicRouting.FindPath(pixelBoard1, starting, ending);
+        //PixelElectrodeConversion.FindPath(pixelBoard1, starting, ending);
         //Tile.AStar(pixelBoard1, starting, ending);
 
         //testing input with electrodes vs coordinates or a mix
@@ -62,8 +62,6 @@ namespace BachelorProject
         //dropletSize = 5;
         //Buffers.AddBuffer(pixelBoard1, dropletSize);
         //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
-
-
 
     }
 }

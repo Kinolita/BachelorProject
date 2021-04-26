@@ -5,7 +5,6 @@ namespace BachelorProject.Movement
 {
     class Buffers
     {
-        //this is actually almost identical to a method in BasicRouting
         static bool BufferValidate(int a, int max) {
             return a >= 0 && a < max;
         }

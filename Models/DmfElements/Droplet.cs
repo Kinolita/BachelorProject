@@ -15,6 +15,7 @@ namespace BachelorProject.Models.DmfElements
         public int SizeY { get; set; }
         public string Color { get; set; }
         public float Temperature { get; set; }
+        public bool Contamination { get; set; }
 
         public static void PrintDroplets(Board specs) {
             int len = specs.Droplets.Count;
@@ -27,6 +28,7 @@ namespace BachelorProject.Models.DmfElements
                 Console.WriteLine("Droplet Size: " + specs.Droplets[i].SizeX + " by " + specs.Droplets[i].SizeY);
                 Console.WriteLine("Droplet Color: " + specs.Droplets[i].Color);
                 Console.WriteLine("Droplet Temperature: " + specs.Droplets[i].Temperature);
+                Console.WriteLine("Droplet Contamination status: " + specs.Droplets[i].Contamination);
             }
             Console.WriteLine();
         }

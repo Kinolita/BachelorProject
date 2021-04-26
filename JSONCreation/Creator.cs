@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace BachelorProject.JSONCreation
 {
-    class Class1
+    class Creator
     {
         public static void SampleBoard(string boardName, int xLength, int yLength, int elecSize) {
             var info1 = new Information {

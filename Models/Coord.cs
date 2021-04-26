@@ -14,6 +14,7 @@ namespace BachelorProject.Models
         }
 
         //we are returning the top and leftmost point in the electrode that is not blocked. 
+        //changing this to pick the center point of the electrode
         public static Coord FindPixel(Pixels[,] pixelBoard, int a) {
             Coord inside = new Coord(-1, -1);
             string check = "";
@@ -24,6 +25,11 @@ namespace BachelorProject.Models
                     if (pixelBoard[k, j].WhichElectrode == a && pixelBoard[k, j].Empty) {
                         inside.X = k;
                         inside.Y = j;
+                        //inside.X = k + pixelBoard[k, j].XRange/2+1;
+                        //inside.Y = j + pixelBoard[k, j].YRange/2+1;
+
+
+
                         goto LoopEnd;
                     }
                 }

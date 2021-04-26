@@ -23,7 +23,8 @@ namespace BachelorProject.Movement
                 for (int j = c; j < d; j++) {
                     //if in target electrode and not empty and droplet or bubble
                     if (pixelBoard[k, j].WhichElectrode == electrodeNumber && !pixelBoard[k, j].Empty &&
-                        (pixelBoard[k, j].BlockageType == "Droplet" || pixelBoard[k, j].BlockageType == "Bubble")) {
+                        (pixelBoard[k, j].BlockageType == "Droplet" || pixelBoard[k, j].BlockageType == "Bubble"
+                        || pixelBoard[k,j].BlockageType == "Contaminated")) {
                         result = false;
                     }
                 }
