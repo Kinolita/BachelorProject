@@ -55,7 +55,7 @@ namespace BachelorProject.Movement
                             //can probably substitute the validate on board method here
                             .Where(tile => tile.X >= 0 && tile.X < maxX)
                             .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop.Name))
+                            //.Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop.Name))
                             .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Name)
                                            || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                             .ToList();
