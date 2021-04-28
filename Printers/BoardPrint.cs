@@ -18,6 +18,12 @@ namespace BachelorProject.Printers
                         case (false, "Buffer"):
                             Console.Write("B");
                             break;
+                        case (false, "Contaminated"):
+                            Console.Write("C");
+                            break;
+                        case (false, "Droplet"):
+                            Console.Write("D");
+                            break;
                         case (false, _):
                             Console.Write("X");
                             break;

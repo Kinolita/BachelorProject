@@ -1,5 +1,6 @@
 ﻿using BachelorProject.Models;
 using System;
+using BachelorProject.Models.DmfElements;
 
 namespace BachelorProject.Movement
 {
@@ -9,7 +10,8 @@ namespace BachelorProject.Movement
             return a >= 0 && a < max;
         }
 
-        public static void AddBuffer(Pixels[,] pixelBoard, double dropSize) {
+        public static void AddBuffer(Pixels[,] pixelBoard, Droplet drop) {
+            double dropSize = Droplet.MaxSize(drop);
             if (dropSize > 0) { dropSize -= 1; }
             var kMax = pixelBoard.GetLength(0);
             var jMax = pixelBoard.GetLength(1);
@@ -20,7 +22,8 @@ namespace BachelorProject.Movement
                 for (var k = 0; k < kMax; k++) {
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer
-                        if ((!pixelBoard[k, j].Empty && pixelBoard[k, j].BlockageType != "Buffer")) {
+                        if (!pixelBoard[k, j].Empty && 
+                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Name)) {
                             //cycling through surrounding pixels
                             for (int i = -buff; i <= buff; i++) {
                                 for (int h = -buff; h <= buff; h++) {
@@ -67,7 +70,8 @@ namespace BachelorProject.Movement
                 for (var k = 0; k < kMax; k++) {
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer
-                        if ((!pixelBoard[k, j].Empty && pixelBoard[k, j].BlockageType != "Buffer")) {
+                        if (!pixelBoard[k, j].Empty && 
+                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Name)) {
                             //cycling through surrounding pixels
                             for (int i = -buff; i <= buff + 1; i++) {
                                 for (int h = -buff; h <= buff + 1; h++) {

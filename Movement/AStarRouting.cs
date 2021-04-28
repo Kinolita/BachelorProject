@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BachelorProject.Models.DmfElements;
+using BachelorProject.Printers;
 
 namespace BachelorProject.Movement
 {
@@ -20,7 +22,7 @@ namespace BachelorProject.Movement
                 this.Distance = Math.Abs(targetX - X) + Math.Abs(targetY - Y);
             }
 
-            public static List<Coord> AStar(Pixels[,] pixelBoard, Coord starting, Coord ending) {
+            public static List<Coord> AStar(Pixels[,] pixelBoard, Coord starting, Coord ending, Droplet drop) {
                 List<Coord> pixelList = new List<Coord>();
                 var start = new Tile {
                     X = starting.X,
@@ -37,7 +39,7 @@ namespace BachelorProject.Movement
                 var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
 
-                static List<Tile> GetPossibleTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile) {
+                static List<Tile> GetPossibleTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile, Droplet drop) {
                     var possibleTiles = new List<Tile>() {
                         new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
                         new Tile { X = currentTile.X, Y = currentTile.Y + 1, Parent = currentTile, Cost = currentTile.Cost + 1},
@@ -49,11 +51,13 @@ namespace BachelorProject.Movement
                     var maxX = pixelBoard.GetLength(0);
                     var maxY = pixelBoard.GetLength(1);
 
-                    return possibleTiles
+                  return possibleTiles
+                            //can probably substitute the validate on board method here
                             .Where(tile => tile.X >= 0 && tile.X < maxX)
                             .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y)))
-                            .Where(tile => pixelBoard[tile.X, tile.Y].Empty || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
+                            .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop.Name))
+                            .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Name)
+                                           || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                             .ToList();
                 }
 
@@ -64,6 +68,8 @@ namespace BachelorProject.Movement
                         //We found the destination!!!! 
                         //Order by ensures that it's the most low cost option. 
                         Console.WriteLine("Destination found!");
+                        //PathPrint.FinalPrint(electrodePathCollection[that.Name]);
+                        //TODO
 
                         var tile = checkTile;
                         while (true) {
@@ -77,7 +83,7 @@ namespace BachelorProject.Movement
                     visitedTiles.Add(checkTile);
                     activeTiles.Remove(checkTile);
 
-                    var walkableTiles = GetPossibleTiles(pixelBoard, checkTile, finish);
+                    var walkableTiles = GetPossibleTiles(pixelBoard, checkTile, finish, drop);
 
                     foreach (var walkableTile in walkableTiles) {
                         //When the tile has already been visited

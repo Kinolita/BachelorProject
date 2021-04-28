@@ -32,5 +32,9 @@ namespace BachelorProject.Models.DmfElements
             }
             Console.WriteLine();
         }
+
+        public static int MaxSize(Droplet drop) {
+            return Math.Max(drop.SizeX, drop.SizeY);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using BachelorProject.Exceptions;
+using BachelorProject.Movement;
+using BachelorProject.Printers;
 
 namespace BachelorProject.Models
 {
@@ -22,21 +24,23 @@ namespace BachelorProject.Models
                 for (int j = 0; j < pixelBoard.GetLength(1); j++) {
 
                     if (pixelBoard[k, j].WhichElectrode == a && pixelBoard[k, j].BlockageType == "Buffer") { check = "B"; }
-                    if (pixelBoard[k, j].WhichElectrode == a && pixelBoard[k, j].Empty) {
+                    if (pixelBoard[k, j].WhichElectrode == a && pixelBoard[k, j].BlockageType == "OoB") { check = "O"; }
+
+                    //if (Pixels.ValidateOnBoard(pixelBoard, k, j)) { 
+                    if (pixelBoard[k, j].WhichElectrode == a){// && pixelBoard[k, j].Empty) {
                         inside.X = k;
                         inside.Y = j;
-                        //inside.X = k + pixelBoard[k, j].XRange/2+1;
-                        //inside.Y = j + pixelBoard[k, j].YRange/2+1;
-
-
-
                         goto LoopEnd;
                     }
                 }
             }
             LoopEnd:
+         
+            //BoardPrint.printBoard(pixelBoard);
             if (inside.X == -1 && check == "B") throw new ElectrodeException("This electrode is blocked: " + a);
-            if (inside.X == -1) throw new ElectrodeException("This electrode does not exist: " + a);
+            //if (inside.X == -1) throw new ElectrodeException("This electrode does not exist: " + a);
+            if (inside.X == -1 && check == "O") throw new ElectrodeException("This electrode does not exist: " + a);
+
             return inside;
         }
     }

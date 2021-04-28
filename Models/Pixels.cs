@@ -87,7 +87,7 @@ namespace BachelorProject.Models
                 for (int q = t.PositionX; q < t.PositionX + t.SizeX; q++) {
                     for (int r = t.PositionY; r < t.PositionY + t.SizeY; r++) {
                         pixelBoard1[q, r].Empty = false;
-                        pixelBoard1[q, r].BlockageType = "Droplet";
+                        pixelBoard1[q, r].BlockageType = t.Name;
                     }
                 }
 
@@ -96,7 +96,7 @@ namespace BachelorProject.Models
                 for (int q = t.PositionX; q < t.PositionX + t.SizeX; q++) {
                     for (int r = t.PositionY; r < t.PositionY + t.SizeY; r++) {
                         pixelBoard1[q, r].Empty = false;
-                        pixelBoard1[q, r].BlockageType = "Bubble";
+                        pixelBoard1[q, r].BlockageType = t.Name;
                     }
                 }
             }
@@ -104,8 +104,8 @@ namespace BachelorProject.Models
             return pixelBoard1;
         }
 
-        public static Pixels[,] ScaleDown(Pixels[,] pixelBoard) {
-        //this will only work for boards with even dimensioned electrodes
+        public static Pixels[,] ScaleDown(Pixels[,] pixelBoard, out bool scaled) {
+            //this will only work for boards with even dimensioned electrodes
             List<Coord> square = new List<Coord>();
             square.Add(new Coord(1, 0));
             square.Add(new Coord(0, 1));
@@ -125,16 +125,27 @@ namespace BachelorProject.Models
 
             if (scalable) {
                 Pixels[,] pixelBoard2 = new Pixels[pixelBoard.GetLength(0) / 2, pixelBoard.GetLength(1) / 2];
-                for (var k = 0; k < pixelBoard2.GetLength(0); k ++) {
-                    for (var j = 0; j < pixelBoard2.GetLength(1); j ++) {
+                for (var k = 0; k < pixelBoard2.GetLength(0); k++) {
+                    for (var j = 0; j < pixelBoard2.GetLength(1); j++) {
                         pixelBoard2[k, j] = pixelBoard[k * 2, j * 2];
                     }
                 }
+
+                scaled = true;
                 return pixelBoard2;
                 // still need to add in preexisting droplets and input/outputs
                 // what about actuators and sensors?
             }
+
+            scaled = false;
             return pixelBoard;
+        }
+
+        public static bool ValidateOnBoard(Pixels[,] pixelBoard, int k, int j) {
+            if (k >= 0 && j >= 0 && k < pixelBoard.GetLength(0) && j < pixelBoard.GetLength(1)) {
+                return true;
+            }
+            return false;
         }
     }
 }
