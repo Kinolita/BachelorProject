@@ -6,7 +6,7 @@ namespace BachelorProject.Printers
 {
     class BoardPrint
     {
-        public static void printBoard(Pixels[,] pixelBoard) {
+        public static void PrintBoard(Pixels[,] pixelBoard) {
             Console.WriteLine("Printing the board:");
             for (int j = 0; j < pixelBoard.GetLength(1); j++) {
                 Console.Write("\n");
@@ -21,8 +21,17 @@ namespace BachelorProject.Printers
                         case (false, "Contaminated"):
                             Console.Write("C");
                             break;
-                        case (false, "Droplet"):
-                            Console.Write("D");
+                        case (false, "drop1"):
+                            Console.Write("1");
+                            break;
+                        case (false, "drop2"):
+                            Console.Write("2");
+                            break;
+                        case (false, "drop3"):
+                            Console.Write("3");
+                            break;
+                        case (false, "drop4"):
+                            Console.Write("4");
                             break;
                         case (false, _):
                             Console.Write("X");

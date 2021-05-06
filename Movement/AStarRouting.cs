@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BachelorProject.Models.DmfElements;
-using BachelorProject.Printers;
 
 namespace BachelorProject.Movement
 {
@@ -34,7 +33,8 @@ namespace BachelorProject.Movement
                     Y = ending.Y
                 };
                 start.SetDistance(finish.X, finish.Y);
-                //Console.WriteLine("Start: " + start.X + "," + start.Y + " End: " + finish.X + "," + finish.Y);
+                //Console.WriteLine("Start: " + start.X + "," + start.Y + "  " + pixelBoard[start.X, start.Y].WhichElectrode +
+                                  //" End: " + finish.X + "," + finish.Y + "  " + pixelBoard[finish.X, finish.Y].WhichElectrode);
 
                 var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
@@ -51,26 +51,22 @@ namespace BachelorProject.Movement
                     var maxX = pixelBoard.GetLength(0);
                     var maxY = pixelBoard.GetLength(1);
 
-                  return possibleTiles
-                            //can probably substitute the validate on board method here
-                            .Where(tile => tile.X >= 0 && tile.X < maxX)
-                            .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                            //.Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop.Name))
-                            .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Name)
-                                           || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
-                            .ToList();
+                    return possibleTiles
+                              .Where(tile => tile.X >= 0 && tile.X < maxX)
+                              .Where(tile => tile.Y >= 0 && tile.Y < maxY)
+                              //this needs to reject ones with any contamination, bubble, or foreign droplet in the relevant electrode
+                              .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop))
+                              .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Name)
+                                             || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
+                              .ToList();
                 }
 
                 while (activeTiles.Any()) {
                     var checkTile = activeTiles.OrderBy(x => x.CostDistance).First();
 
                     if (checkTile.X == finish.X && checkTile.Y == finish.Y) {
-                        //We found the destination!!!! 
                         //Order by ensures that it's the most low cost option. 
                         Console.WriteLine("Destination found!");
-                        //PathPrint.FinalPrint(electrodePathCollection[that.Name]);
-                        //TODO
-
                         var tile = checkTile;
                         while (true) {
                             pixelList.Insert(0, new Coord(tile.X, tile.Y));
@@ -85,10 +81,8 @@ namespace BachelorProject.Movement
 
                     var walkableTiles = GetPossibleTiles(pixelBoard, checkTile, finish, drop);
 
-                    foreach (var walkableTile in walkableTiles) {
-                        //When the tile has already been visited
-                        if (visitedTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) continue;
-
+                    //When the tile has already been visited
+                    foreach (var walkableTile in walkableTiles.Where(walkableTile => !visitedTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y))) {
                         //When the tile is already active (A zigzag path might become straighter). 
                         if (activeTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) {
                             var existingTile = activeTiles.First(x => x.X == walkableTile.X && x.Y == walkableTile.Y);
@@ -101,13 +95,8 @@ namespace BachelorProject.Movement
                         }
                     }
                 }
-                Console.WriteLine("No Path Found!");
-                //Console.WriteLine("The pixel route so far: ");
-                //foreach (var tilesSoFar in visitedTiles) {
-                //    Console.Write("(" + tilesSoFar.X + "," + tilesSoFar.Y + ") ");
-                //}
-
-                return pixelList;
+                Console.WriteLine("No Path Found");
+           return pixelList;
             }
         }
     }

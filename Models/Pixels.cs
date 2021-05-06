@@ -128,13 +128,13 @@ namespace BachelorProject.Models
                 for (var k = 0; k < pixelBoard2.GetLength(0); k++) {
                     for (var j = 0; j < pixelBoard2.GetLength(1); j++) {
                         pixelBoard2[k, j] = pixelBoard[k * 2, j * 2];
+                        pixelBoard2[k, j].XRange = pixelBoard[k * 2, j * 2].XRange / 2;
+                        pixelBoard2[k, j].YRange = pixelBoard[k * 2, j * 2].YRange / 2;
                     }
                 }
 
                 scaled = true;
                 return pixelBoard2;
-                // still need to add in preexisting droplets and input/outputs
-                // what about actuators and sensors?
             }
 
             scaled = false;

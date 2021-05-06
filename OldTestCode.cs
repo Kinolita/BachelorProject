@@ -14,7 +14,7 @@ namespace BachelorProject
         //Output.PrintOutputs(boardSpecs);
         //Droplet.PrintDroplets(boardSpecs);
         //Bubble.PrintBubbles(boardSpecs);
-        //Board.printBoard(pixelBoard1);
+        //Board.PrintBoard(pixelBoard1);
 
 
         //Dummy navigation on board4x3
