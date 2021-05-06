@@ -18,9 +18,9 @@ namespace BachelorProject.Models.DmfElements
         public bool Contamination { get; set; }
 
         public static void PrintDroplets(Board specs) {
-            int len = specs.Droplets.Count;
+            var len = specs.Droplets.Count;
             Console.WriteLine("Number of droplets on board: " + len);
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Droplet name: " + specs.Droplets[i].Name);
                 Console.WriteLine("Droplet ID: " + specs.Droplets[i].Id);
                 Console.WriteLine("Droplet Contents: " + specs.Droplets[i].SubstanceName);

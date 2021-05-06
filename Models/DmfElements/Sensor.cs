@@ -14,9 +14,9 @@ namespace BachelorProject.Models.DmfElements
         public int SizeY { get; set; }
 
         public static void PrintSensors(Board specs) {
-            int len = specs.Sensors.Count;
+            var len = specs.Sensors.Count;
             Console.WriteLine("Number of sensors on board: " + len);
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Sensor name: " + specs.Sensors[i].Name);
                 Console.WriteLine("ID: " + specs.Sensors[i].Id);
                 Console.WriteLine("Sensor ID: " + specs.Sensors[i].SensorId);

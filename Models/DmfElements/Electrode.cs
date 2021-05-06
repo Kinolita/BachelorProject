@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BachelorProject.Models.DmfElements
@@ -19,10 +18,9 @@ namespace BachelorProject.Models.DmfElements
         public IList<IList<int>> corners { get; set; }
 
         public static void PrintElectrodes(Board specs) {
-            int len = specs.Electrodes.Count;
+            var len = specs.Electrodes.Count;
             Console.WriteLine("Number of electrodes on board: " + len);
-            string status1;
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
 
                 Console.WriteLine("Electrode name: " + specs.Electrodes[i].name);
                 Console.WriteLine("ID: " + specs.Electrodes[i].ID);
@@ -39,12 +37,12 @@ namespace BachelorProject.Models.DmfElements
                     Console.WriteLine("Electrode shape: custom polygon");
                     Console.WriteLine("Electrode Origin: (" + specs.Electrodes[i].positionX + "," + specs.Electrodes[i].positionY + ")");
                     Console.Write("Electrode corners: ");
-                    for (int j = 0; j < specs.Electrodes[i].corners.Count; j++) {
-                        Console.Write("(" + specs.Electrodes[i].corners[j][0] + "," + specs.Electrodes[i].corners[j][1] + ") ");
+                    foreach (var corner in specs.Electrodes[i].corners) {
+                        Console.Write("(" + corner[0] + "," + corner[1] + ") ");
                     }
                 }
 
-                if (specs.Electrodes[i].status == 0) { status1 = "off"; } else { status1 = "on"; }
+                var status1 = specs.Electrodes[i].status == 0 ? "off" : "on";
                 Console.WriteLine(Environment.NewLine + "Electrode status: " + status1);
                 Console.WriteLine();
             }

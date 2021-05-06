@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BachelorProject.Models;
 using BachelorProject.Models.DmfElements;
-using BachelorProject.Printers;
 
 namespace BachelorProject.Movement
 {
@@ -16,7 +15,6 @@ namespace BachelorProject.Movement
                 Buffers.RemoveBuffer(pixelBoard);
                 Buffers.AddBuffer(pixelBoard, drop);
                 finalPath = AStarRouting.Tile.AStar(pixelBoard, start, finishCoordinate, drop);
-                //BoardPrint.PrintBoard(pixelBoard);
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }

@@ -18,10 +18,10 @@ namespace BachelorProject.Models.DmfElements
 
         public static void PrintInformation(Board specs) {
             Console.WriteLine("Board Specifications: ");
-            int len = specs.Information.Count;
+            var len = specs.Information.Count;
 
             //really there should be no need for the for loop as there should only be one block of information
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Platform name: " + specs.Information[i].PlatformName);
                 Console.WriteLine("Platform type: " + specs.Information[i].PlatformType);
                 Console.WriteLine("Platform ID: " + specs.Information[i].PlatformId);

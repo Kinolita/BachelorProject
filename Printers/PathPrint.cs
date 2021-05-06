@@ -7,9 +7,9 @@ namespace BachelorProject.Printers
     {
         public static void FinalPrint(List<SortedSet<int>> expandedElecList) {
             //printing the expended list
-            foreach (var that in expandedElecList) {
-                foreach (var smallThat in that) {
-                    Console.Write(" " + smallThat);
+            foreach (var stepList in expandedElecList) {
+                foreach (var step in stepList) {
+                    Console.Write(" " + step);
                 }
                 Console.Write(",");
                 Console.WriteLine();

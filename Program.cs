@@ -24,9 +24,9 @@ namespace BachelorProject
             //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\100x100.json");
             //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\board10x10FatMaze.json");
             //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\32x20_mini_maze.json");
-            var theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\standard32x20.json");
+            var jsonString = File.ReadAllText(path + @"\JSONBoards\standard32x20.json");
 
-            var boardSpecs = JsonConvert.DeserializeObject<Board>(theStringToEndAllStrings);
+            var boardSpecs = JsonConvert.DeserializeObject<Board>(jsonString);
             var pixelBoard1 = Pixels.Create(boardSpecs);
             Information.PrintInformation(boardSpecs);
 
@@ -72,28 +72,28 @@ namespace BachelorProject
             //};
 
             Scheduler.MovingDroplets(pixelBoard1, dropletList, endingPoints);
-   
+
+
             //Helper method to create droplets
-            static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int size, bool contam) {
+            static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int size, bool isContaminating) {
                 var coordinates = new Coord();
                 try {
                     coordinates = Coord.FindPixel(pixelBoard, location);
                 } catch (Exception e) {
                     Console.WriteLine(e);
                 }
-
                 var thisDroplet = new Droplet {
                     Name = name,
                     SizeY = size,
                     SizeX = size,
-                    Contamination = contam,
+                    Contamination = isContaminating,
                     PositionX = coordinates.X,
                     PositionY = coordinates.Y
                 };
                 return thisDroplet;
             }
-            Console.Beep();
 
+            Console.Beep();
             //JSONCreation.Creator.SampleBoard("blank32x20", 32, 20, 10);
         }
     }

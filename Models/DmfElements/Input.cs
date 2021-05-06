@@ -12,8 +12,8 @@ namespace BachelorProject.Models.DmfElements
 
         public static void PrintInputs(Board specs) {
             Console.WriteLine("Board Inputs: ");
-            int len = specs.Inputs.Count;
-            for (int i = 0; i < len; i++) {
+            var len = specs.Inputs.Count;
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Input name: " + specs.Inputs[i].Name);
                 Console.WriteLine("ID: " + specs.Inputs[i].Id);
                 Console.WriteLine("Input ID: " + specs.Inputs[i].InputId);

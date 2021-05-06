@@ -12,9 +12,9 @@ namespace BachelorProject.Models.DmfElements
         public int SizeY { get; set; }
 
         public static void PrintBubbles(Board specs) {
-            int len = specs.Bubbles.Count;
+            var len = specs.Bubbles.Count;
             Console.WriteLine("Number of bubbles on board: " + len);
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Droplet name: " + specs.Bubbles[i].Name);
                 Console.WriteLine("Droplet ID: " + specs.Bubbles[i].Id);
                 Console.WriteLine("Droplet Position: (" + specs.Bubbles[i].PositionX + "," + specs.Bubbles[i].PositionY + ")");

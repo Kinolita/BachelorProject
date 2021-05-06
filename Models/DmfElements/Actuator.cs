@@ -15,9 +15,9 @@ namespace BachelorProject.Models.DmfElements
         public int sizeY { get; set; }
 
         public static void PrintActuators(Board specs) {
-            int len = specs.Actuators.Count;
+            var len = specs.Actuators.Count;
             Console.WriteLine("Number of actuators on board: " + len);
-            for (int i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 Console.WriteLine("Actuator name: " + specs.Actuators[i].name);
                 Console.WriteLine("ID: " + specs.Actuators[i].ID);
                 Console.WriteLine("Actuator ID: " + specs.Actuators[i].actuatorId);

@@ -6,7 +6,7 @@ namespace BachelorProject.Movement
 {
     class Buffers
     {
-        static bool BufferValidate(int a, int max) {
+        private static bool BufferValidate(int a, int max) {
             return a >= 0 && a < max;
         }
 

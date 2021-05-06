@@ -11,41 +11,38 @@ namespace BachelorProject.Movement
         public static List<List<Coord>> ExpandPixelPath(Pixels[,] pixelBoard, List<Coord> pixelPath, float dropletSize) {
             var expandedPixelList = new List<List<Coord>>();
             //finding edges of contamination path for each pixel
-            foreach (var that in pixelPath) {
-                var a = that.X - (int)dropletSize / 2; //floor
-                var b = (int)Math.Ceiling(that.X + dropletSize / 2); //ceiling
-                var c = that.Y - (int)dropletSize / 2; //floor
-                var d = (int)Math.Ceiling(that.Y + dropletSize / 2); //ceiling
+            foreach (var location in pixelPath) {
+                var left = location.X - (int)dropletSize / 2;
+                var right = (int)Math.Ceiling(location.X + dropletSize / 2);
+                var up = location.Y - (int)dropletSize / 2;
+                var down = (int)Math.Ceiling(location.Y + dropletSize / 2);
 
                 //accounting for large paths close to the edge
-                if (a < 0) {
-                    int extra = 0 - a;
-                    a = 0;
-                    b += extra;
-                } else if (b > pixelBoard.GetLength(0)) {
-                    int extra = pixelBoard.GetLength(0) - b;
-                    b = pixelBoard.GetLength(0);
-                    a += extra;
+                if (left < 0) {
+                    int extra = 0 - left;
+                    left = 0;
+                    right += extra;
+                } else if (right > pixelBoard.GetLength(0)) {
+                    int extra = pixelBoard.GetLength(0) - right;
+                    right = pixelBoard.GetLength(0);
+                    left += extra;
                 }
 
-                if (c < 0) {
-                    int extra = 0 - c;
-                    c = 0;
-                    d += extra;
-                } else if (d > pixelBoard.GetLength(1)) {
-                    int extra = pixelBoard.GetLength(1) - d;
-                    d = pixelBoard.GetLength(1);
-                    c += extra;
+                if (up < 0) {
+                    int extra = 0 - up;
+                    up = 0;
+                    down += extra;
+                } else if (down > pixelBoard.GetLength(1)) {
+                    int extra = pixelBoard.GetLength(1) - down;
+                    down = pixelBoard.GetLength(1);
+                    up += extra;
                 }
 
                 var checklist = new List<Coord>();
-                //if (pixelBoard[that.X, that.Y].XRange < dropletSize || pixelBoard[that.X, that.Y].YRange < dropletSize) {
-                //if (pixelBoard[that.X, that.Y].Empty) {
-                for (var k = a; k < b; k++) {
-                    for (var j = c; j < d; j++) {
+                for (var k = left; k < right; k++) {
+                    for (var j = up; j < down; j++) {
                         checklist.Add(new Coord(k, j));
                     }
-                    //}
                 }
                 expandedPixelList.Add(checklist);
             }
@@ -70,8 +67,8 @@ namespace BachelorProject.Movement
         }
 
         public static int SmallestElectrode(Pixels[,] pixelBoard) {
-            var smallsX = 10000;
-            var smallsY = 10000;
+            var smallsX = 100000;
+            var smallsY = 100000;
             for (var k = 0; k < pixelBoard.GetLength(0); k++) {
                 for (var j = 0; j < pixelBoard.GetLength(1); j++) {
                     if (pixelBoard[k, j].WhichElectrode != -1 && pixelBoard[k, j].XRange < smallsX) { smallsX = pixelBoard[k, j].XRange; }
@@ -90,40 +87,26 @@ namespace BachelorProject.Movement
 
             if (dropSize > minElectrode) {
                 //expanding the original pixel path into a list of lists
-                var that = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
-
-                //test printing expanded pixel path
-                //Console.WriteLine("expanded pixel path: ");
-                //foreach (var that2 in that) {
-                //    foreach (var that3 in that2) {
-                //        Console.Write(that3.X + "," + that3.Y + "   ");
-                //    }
-                //    Console.WriteLine();
-                //}
+                var expandedPixelPath = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
 
                 if (drop.Contamination) {
-                    foreach (var step in that) {
-                        //Console.WriteLine("contaminated step for " + drop.Name);
-                        //foreach (var dgd in step) {
-                        //    Console.Write(dgd.X + "," + dgd.Y + "  ");
-                        //}
-                        Scheduler.ContaminateMe(pixelBoard, step);
+                    foreach (var step in expandedPixelPath) {
+                        Scheduler.ContaminateBoard(pixelBoard, step);
                     }
                 }
 
                 //converting expanded pixel path to electrodes
-                var expandedElectrodeList = PixelToElectrode(pixelBoard, that);
+                var expandedElectrodeList = PixelToElectrode(pixelBoard, expandedPixelPath);
                 return expandedElectrodeList;
             }
 
             var finalSet = new HashSet<int>();
-            //TODO - only contaminating a single wide pixel
             var expandedPath = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
             //contaminating expanded path and adding electrode# to hashset
             foreach (var step in expandedPath) {
-                Scheduler.ContaminateMe(pixelBoard, step);
-                foreach (var pixelCoord in step) {
-                    finalSet.Add(pixelBoard[pixelCoord.X, pixelCoord.Y].WhichElectrode);
+                Scheduler.ContaminateBoard(pixelBoard, step);
+                foreach (var pixelLocation in step) {
+                    finalSet.Add(pixelBoard[pixelLocation.X, pixelLocation.Y].WhichElectrode);
                 }
             }
             return finalSet.Select(step => new SortedSet<int>() { step }).ToList();
