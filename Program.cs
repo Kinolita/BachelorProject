@@ -50,10 +50,10 @@ namespace BachelorProject
             //BoardPrint.PrintBoard(pixelBoard1);
             //BoardPrint.PrintBoard(pixelBoard2);
 
-            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 7, true);
+            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 7, false);
             var drop2 = DropletCreation(pixelBoard1, 256, "drop2", 11, true);
             var drop3 = DropletCreation(pixelBoard1, 422, "drop3", 25, true);
-            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 15, true);
+            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 15, false);
 
             var dropletList = new List<Droplet> { drop1, drop2, drop3, drop4 };
             var endingPoints = new Dictionary<string, int> {

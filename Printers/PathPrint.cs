@@ -15,5 +15,14 @@ namespace BachelorProject.Printers
                 Console.WriteLine();
             }
         }
+
+        public static void FinalPrint(List<int> expandedElecList) {
+            //printing the expended list
+            foreach (var step in expandedElecList) {
+                Console.Write(" " + step);
+            }
+            Console.Write(",");
+            Console.WriteLine();
+        }
     }
 }

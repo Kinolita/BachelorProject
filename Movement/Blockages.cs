@@ -1,4 +1,5 @@
 ﻿using System;
+using BachelorProject.Exceptions;
 using BachelorProject.Models;
 using BachelorProject.Models.DmfElements;
 
@@ -48,6 +49,10 @@ namespace BachelorProject.Movement
         }
 
         public static void DropletSet(Pixels[,] pixelBoard, Coord destination, Droplet drop) {
+            if (destination.X == -1 || destination.Y == -1) {
+                throw new ElectrodeException("The position for " + drop.Name + " is not valid.");
+            }
+
             var size = Droplet.MaxSize(drop);
             var left = destination.X - size / 2;
             var right = destination.X + size / 2;
