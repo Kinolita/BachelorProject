@@ -66,7 +66,7 @@ namespace BachelorProject.Movement
 
                     if (checkTile.X == finish.X && checkTile.Y == finish.Y) {
                         //Order by ensures that it's the most low cost option. 
-                        Console.WriteLine("Destination found!");
+                        Console.Write("Destination found for ");
                         var tile = checkTile;
                         while (true) {
                             pixelList.Insert(0, new Coord(tile.X, tile.Y));
@@ -95,7 +95,7 @@ namespace BachelorProject.Movement
                         }
                     }
                 }
-                Console.WriteLine("No Path Found");
+                Console.Write("No Path Found for ");
            return pixelList;
             }
         }

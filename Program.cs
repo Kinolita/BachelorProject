@@ -5,6 +5,7 @@ using System.IO;
 using BachelorProject.Models.DmfElements;
 using BachelorProject.Models;
 using BachelorProject.Movement;
+using BachelorProject.Printers;
 
 namespace BachelorProject
 {
@@ -50,10 +51,10 @@ namespace BachelorProject
             //BoardPrint.PrintBoard(pixelBoard1);
             //BoardPrint.PrintBoard(pixelBoard2);
 
-            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 7, false);
+            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 7, true);
             var drop2 = DropletCreation(pixelBoard1, 256, "drop2", 11, true);
             var drop3 = DropletCreation(pixelBoard1, 422, "drop3", 25, true);
-            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 15, false);
+            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 15, true);
 
             var dropletList = new List<Droplet> { drop1, drop2, drop3, drop4 };
             var endingPoints = new Dictionary<string, int> {
@@ -70,9 +71,12 @@ namespace BachelorProject
             //    { drop1.Name, 84 },
             //    { drop2.Name, 68 }
             //};
-
-            Scheduler.MovingDroplets(pixelBoard1, dropletList, endingPoints);
-
+            try {
+                var output = Scheduler.MovingDroplets(pixelBoard1, dropletList, endingPoints);
+                CollisionPrint.PrintCollisions(output);
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
 
             //Helper method to create droplets
             static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int size, bool isContaminating) {
@@ -93,8 +97,10 @@ namespace BachelorProject
                 return thisDroplet;
             }
 
-            Console.Beep();
+            //Method to create json files for custom board sizes
             //JSONCreation.Creator.SampleBoard("blank32x20", 32, 20, 10);
+
+            Console.Beep();
         }
     }
 }

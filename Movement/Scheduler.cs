@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BachelorProject.Exceptions;
 using BachelorProject.Models;
 using BachelorProject.Models.DmfElements;
-using BachelorProject.Printers;
 
 namespace BachelorProject.Movement
 {
     class Scheduler
     {
-        public static void MovingDroplets(Pixels[,] pixelBoard, List<Droplet> drops, Dictionary<string, int> endElectrodeDictionary) {
+        public static Dictionary<(string, string), List<int>> MovingDroplets(Pixels[,] pixelBoard, List<Droplet> drops, Dictionary<string, int> endElectrodeDictionary) {
             pixelBoard = Pixels.ScaleDown(pixelBoard, out var scaled);
 
             if (scaled) {
@@ -37,10 +37,9 @@ namespace BachelorProject.Movement
                     Blockages.DropletSet(pixelBoard, position, tDrop);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
-                    return;
+                    throw new RouteException("Routing is not possible with the current droplet locations.");
                 }
             }
-            //BoardPrint.PrintBoard(pixelBoard);
 
             //start routing with non-contaminating drops
             //if successful add to final list, else stop
@@ -56,8 +55,7 @@ namespace BachelorProject.Movement
                         electrodePathCollection.Add(drop.Name, simplePath);
                     } else {
                         Console.WriteLine("Scheduling Unsuccessful");
-                        //return failedDrops;
-                        return;
+                        throw new RouteException("Routing is not possible with the current droplet set.");
                     }
                 } else {
                     failedDrops.Add(drop);
@@ -83,8 +81,8 @@ namespace BachelorProject.Movement
                 for (var m = 0; m < attemptList.Count; m++) {
                     var attemptDrop = attemptList[m];
                     var end = endElectrodeDictionary[attemptDrop.Name];
-                    Console.WriteLine("Finding the path for " + attemptDrop.Name);
                     var contaminatedPath = InputHandler.CheckInputType(pixelBoard, new Coord(attemptDrop.PositionX, attemptDrop.PositionY), end, attemptList[m]);
+                    Console.WriteLine(attemptDrop.Name);
 
                     //if no path found delete from collection
                     if (!contaminatedPath.Any()) {
@@ -111,7 +109,7 @@ namespace BachelorProject.Movement
             }
 
             if (failedDrops.Count == 0) {
-                //BoardPrint.PrintBoard(pixelBoard);
+                Console.WriteLine();
                 Console.WriteLine("Successful Order:");
                 foreach (var drop in finalDropOrder) {
                     Console.Write(drop.Name + " ");
@@ -124,13 +122,13 @@ namespace BachelorProject.Movement
                 //    PathPrint.FinalPrint(electrodePathCollection[drop.Name]);
                 //}
 
-                Console.WriteLine("Path collisions are: ");
-                CollisionDetector(finalDropOrder, electrodePathCollection);
-                //return finalDropOrder;
-                return;
+                var endProduct = CollisionDetector(finalDropOrder, electrodePathCollection);
+                return endProduct;
             }
+
+            Console.WriteLine();
             Console.WriteLine("Scheduling Unsuccessful");
-            //return failedDrops;
+            throw new RouteException("Routing is not possible with the current droplet set.");
         }
 
         private static List<int> SimplifyPath(List<SortedSet<int>> electrodePath) {
@@ -156,22 +154,24 @@ namespace BachelorProject.Movement
             }
         }
 
-        private static void CollisionDetector(List<Droplet> finalOrder, Dictionary<string, List<int>> electrodePathCollection) {
+        private static Dictionary<(string, string), List<int>> CollisionDetector(List<Droplet> finalOrder, Dictionary<string, List<int>> electrodePathCollection) {
             var dropNames = finalOrder.Select(drop => drop.Name).ToList();
+            var collisionList = new Dictionary<(string, string), List<int>>();
             for (var i = 0; i < dropNames.Count; i++) {
                 var m = i + 1;
                 while (m < dropNames.Count) {
                     var collision = electrodePathCollection[dropNames[i]].Intersect(electrodePathCollection[dropNames[m]]).ToList();
                     if (collision.Any()) {
-                        Console.Write(dropNames[i] + " & " + dropNames[m] + " collide on: ");
+                        var tempList = new List<int>();
                         foreach (var electrode in collision) {
-                            Console.Write(electrode + " ");
+                            tempList.Add(electrode);
                         }
-                        Console.WriteLine();
+                        collisionList.Add((dropNames[i], dropNames[m]), tempList);
                     }
                     m++;
                 }
             }
+            return collisionList;
         }
     }
 }
