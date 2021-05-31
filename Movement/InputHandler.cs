@@ -7,7 +7,8 @@ namespace BachelorProject.Movement
 {
     class InputHandler
     {
-        public static List<Coord> CheckInputType(Pixels[,] pixelBoard, Coord start, int finish, Droplet drop) {
+        //adds buffers and does routing
+        public static List<Coord> RoutingPackage(Pixels[,] pixelBoard, Coord start, int finish, Droplet drop) {
 
             var finalPath = new List<Coord>();
             try {
@@ -21,6 +22,7 @@ namespace BachelorProject.Movement
             return finalPath;
         }
 
+        //finds a pixel in an electrode for placement
         public static Coord PlaceInElectrode(Pixels[,] pixelBoard, int electrode, Droplet drop) {
             Buffers.RemoveBuffer(pixelBoard);
             Buffers.AddBuffer(pixelBoard, drop);

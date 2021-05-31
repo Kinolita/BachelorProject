@@ -48,7 +48,7 @@ namespace BachelorProject.Models
             };
         }
 
-        public static int Flip(int a) {
+        private static int Flip(int a) {
             if (a % 2 == 0) {
                 return -1;
             }

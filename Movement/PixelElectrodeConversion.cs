@@ -9,7 +9,7 @@ namespace BachelorProject.Movement
     class PixelElectrodeConversion
     {
         //takes in pixel path and returns expanded electrode list
-        public static List<SortedSet<int>> FindElectrodes(Pixels[,] pixelBoard, List<Coord> listOfPixels, Droplet drop) {
+        public static List<int> FindElectrodes(Pixels[,] pixelBoard, List<Coord> listOfPixels, Droplet drop) {
             var minElectrode = SmallestElectrode(pixelBoard);
             var dropSize = Math.Max(drop.SizeX, drop.SizeY);
 
@@ -25,11 +25,12 @@ namespace BachelorProject.Movement
 
                 //converting expanded pixel path to electrodes
                 var expandedElectrodeList = PixelToElectrode(pixelBoard, expandedPixelPath);
-                return expandedElectrodeList;
+                return SimplifyPath(expandedElectrodeList);
             }
 
             var finalSet = new HashSet<int>();
             var expandedPath = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
+
             //contaminating expanded path and adding electrode# to hashset
             foreach (var step in expandedPath) {
                 if (drop.Contamination) Contamination.ContaminateBoard(pixelBoard, step);
@@ -37,10 +38,12 @@ namespace BachelorProject.Movement
                     finalSet.Add(pixelBoard[pixelLocation.X, pixelLocation.Y].WhichElectrode);
                 }
             }
-            return finalSet.Select(step => new SortedSet<int>() { step }).ToList();
+            var nestedList = finalSet.Select(step => new SortedSet<int>() { step }).ToList();
+            return SimplifyPath(nestedList);
         }
 
-        public static int SmallestElectrode(Pixels[,] pixelBoard) {
+        //finds the smallest electrode dimension present in the board
+        private static int SmallestElectrode(Pixels[,] pixelBoard) {
             var smallsX = 100000;
             var smallsY = 100000;
             for (var k = 0; k < pixelBoard.GetLength(0); k++) {
@@ -49,13 +52,12 @@ namespace BachelorProject.Movement
                     if (pixelBoard[k, j].WhichElectrode != -1 && pixelBoard[k, j].YRange < smallsY) { smallsY = pixelBoard[k, j].YRange; }
                 }
             }
-
             if (smallsY < smallsX) { smallsX = smallsY; }
             return smallsX;
         }
 
-        public static List<SortedSet<int>> PixelToElectrode(Pixels[,] pixelBoard, List<List<Coord>> expandedPixelList) {
-            //sorted set is only used for human readability, does add to the functionality more than set.
+        private static List<SortedSet<int>> PixelToElectrode(Pixels[,] pixelBoard, List<List<Coord>> expandedPixelList) {
+            //sorted set is only used for human readability, doesn't add to the functionality more than set.
             var expandedElectrodeList = new List<SortedSet<int>>();
             var previousChecklist = new SortedSet<int>() { -1 };
 
@@ -64,7 +66,6 @@ namespace BachelorProject.Movement
                 foreach (var pix in step) {
                     checklist.Add(pixelBoard[pix.X, pix.Y].WhichElectrode);
                 }
-
                 if (checklist.SetEquals(previousChecklist)) continue;
                 expandedElectrodeList.Add(checklist);
                 previousChecklist = checklist;
@@ -72,7 +73,7 @@ namespace BachelorProject.Movement
             return expandedElectrodeList;
         }
 
-        public static List<List<Coord>> ExpandPixelPath(Pixels[,] pixelBoard, List<Coord> pixelPath, float dropletSize) {
+        private static List<List<Coord>> ExpandPixelPath(Pixels[,] pixelBoard, List<Coord> pixelPath, float dropletSize) {
             var expandedPixelList = new List<List<Coord>>();
             //finding edges of contamination path for each pixel
             foreach (var location in pixelPath) {
@@ -111,6 +112,15 @@ namespace BachelorProject.Movement
                 expandedPixelList.Add(checklist);
             }
             return expandedPixelList;
+        }
+
+        // reduces widened electrode paths to single lists for comparision 
+        private static List<int> SimplifyPath(List<SortedSet<int>> electrodePath) {
+            var simpleList = new List<int>();
+            foreach (var step in electrodePath) {
+                simpleList.AddRange(step.ToList());
+            }
+            return simpleList;
         }
     }
 }

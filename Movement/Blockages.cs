@@ -48,6 +48,7 @@ namespace BachelorProject.Movement
             return result;
         }
 
+        //marks droplet location according to size and start pixel
         public static void DropletSet(Pixels[,] pixelBoard, Coord destination, Droplet drop) {
             if (destination.X == -1 || destination.Y == -1) {
                 throw new ElectrodeException("The position for " + drop.Name + " is not valid.");

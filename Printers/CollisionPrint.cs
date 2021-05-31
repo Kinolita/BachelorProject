@@ -6,7 +6,7 @@ namespace BachelorProject.Printers
 {
     class CollisionPrint
     {
-        public static void PrintCollisions(Dictionary<(string, string), List<int>> collisionsDictionary) {
+        public static void PrintCollisions(Dictionary<(int, int), List<int>> collisionsDictionary) {
             if (!collisionsDictionary.Any()) {
                 Console.WriteLine("There are no collisions for this routing.");
             } else {

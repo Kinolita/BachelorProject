@@ -36,41 +36,34 @@ namespace BachelorProject
             //int endElectrode = 606;
 
             //int dropletSize = 7;
-            //InputHandler.CheckInputType(pixelBoard1, startElectrode, endElectrode, dropletSize);
+            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
             //dropletSize = 8;
-            //InputHandler.CheckInputType(pixelBoard1, startElectrode, endElectrode, dropletSize);
+            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
 
             //startElectrode = 56;
             //endElectrode = 20;
             //dropletSize = 4;
-            //InputHandler.CheckInputType(pixelBoard1, startElectrode, endElectrode, dropletSize);
+            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
 
             //dropletSize = 2;
             //Pixels[,] pixelBoard2 = Pixels.ScaleDown(pixelBoard1);
-            //InputHandler.CheckInputType(pixelBoard2, startElectrode, endElectrode, dropletSize);
+            //InputHandler.RoutingPackage(pixelBoard2, startElectrode, endElectrode, dropletSize);
             //BoardPrint.PrintBoard(pixelBoard1);
             //BoardPrint.PrintBoard(pixelBoard2);
 
-            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 7, true);
-            var drop2 = DropletCreation(pixelBoard1, 256, "drop2", 11, true);
-            var drop3 = DropletCreation(pixelBoard1, 422, "drop3", 25, true);
-            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 15, true);
+            var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 001, 7, false);
+            var drop2 = DropletCreation(pixelBoard1, 256, "drop2", 002,11, true);
+            var drop3 = DropletCreation(pixelBoard1, 422, "drop3", 003,25, true);
+            var drop4 = DropletCreation(pixelBoard1, 99, "drop4", 004,15, true);
 
             var dropletList = new List<Droplet> { drop1, drop2, drop3, drop4 };
-            var endingPoints = new Dictionary<string, int> {
-                { drop1.Name, 620 },
-                { drop2.Name, 286 },
-                { drop3.Name, 315 },
-                { drop4.Name, 560 }
+            var endingPoints = new Dictionary<int, int> {
+                { drop1.Id, 620 },
+                { drop2.Id, 286 },
+                { drop3.Id, 315 },
+                { drop4.Id, 560 }
             };
 
-            //Droplet drop1 = DropletCreation(pixelBoard1, 34, "drop1", 15, true);
-            //Droplet drop2 = DropletCreation(pixelBoard1, 61, "drop2", 11, true);
-            //List<Droplet> dropletList = new List<Droplet> { drop1, drop2 };
-            //Dictionary<string, int> endingPoints = new Dictionary<string, int> {
-            //    { drop1.Name, 84 },
-            //    { drop2.Name, 68 }
-            //};
             try {
                 var output = Scheduler.MovingDroplets(pixelBoard1, dropletList, endingPoints);
                 CollisionPrint.PrintCollisions(output);
@@ -79,7 +72,7 @@ namespace BachelorProject
             }
 
             //Helper method to create droplets
-            static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int size, bool isContaminating) {
+            static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int id, int size, bool isContaminating) {
                 var coordinates = new Coord();
                 try {
                     coordinates = Coord.FindPixel(pixelBoard, location);
@@ -88,6 +81,7 @@ namespace BachelorProject
                 }
                 var thisDroplet = new Droplet {
                     Name = name,
+                    Id = id,
                     SizeY = size,
                     SizeX = size,
                     Contamination = isContaminating,
@@ -99,7 +93,6 @@ namespace BachelorProject
 
             //Method to create json files for custom board sizes
             //JSONCreation.Creator.SampleBoard("blank32x20", 32, 20, 10);
-
             Console.Beep();
         }
     }

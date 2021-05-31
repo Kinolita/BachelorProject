@@ -48,20 +48,20 @@ namespace BachelorProject
         //testing input with electrodes vs coordinates or a mix
         //int startElec = 20;
         //int endElec = 69;
-        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
-        //InputHandler.CheckInputType(pixelBoard1, starting, ending);
-        //InputHandler.CheckInputType(pixelBoard1, starting, endElec);
+        //InputHandler.RoutingPackage(pixelBoard1, startElec, endElec);
+        //InputHandler.RoutingPackage(pixelBoard1, starting, ending);
+        //InputHandler.RoutingPackage(pixelBoard1, starting, endElec);
 
         //combining buffer with routing droplets
         //int startElec = 0;
         //int endElec = 99;
         //int dropletSize = 15;
         //Buffers.AddBuffer(pixelBoard1, dropletSize);
-        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+        //InputHandler.RoutingPackage(pixelBoard1, startElec, endElec);
         //Buffers.RemoveBuffer(pixelBoard1);
         //dropletSize = 5;
         //Buffers.AddBuffer(pixelBoard1, dropletSize);
-        //InputHandler.CheckInputType(pixelBoard1, startElec, endElec);
+        //InputHandler.RoutingPackage(pixelBoard1, startElec, endElec);
 
     }
 }

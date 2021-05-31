@@ -33,8 +33,6 @@ namespace BachelorProject.Movement
                     Y = ending.Y
                 };
                 start.SetDistance(finish.X, finish.Y);
-                //Console.WriteLine("Start: " + start.X + "," + start.Y + "  " + pixelBoard[start.X, start.Y].WhichElectrode +
-                                  //" End: " + finish.X + "," + finish.Y + "  " + pixelBoard[finish.X, finish.Y].WhichElectrode);
 
                 var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
@@ -96,7 +94,7 @@ namespace BachelorProject.Movement
                     }
                 }
                 Console.Write("No Path Found for ");
-           return pixelList;
+                return pixelList;
             }
         }
     }
