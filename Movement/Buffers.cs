@@ -23,7 +23,7 @@ namespace BachelorProject.Movement
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer
                         if (!pixelBoard[k, j].Empty &&
-                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Name)) {
+                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Id.ToString())) {
                             //cycling through surrounding pixels
                             for (int i = -buff; i <= buff; i++) {
                                 for (int h = -buff; h <= buff; h++) {
@@ -71,7 +71,7 @@ namespace BachelorProject.Movement
                     for (var j = 0; j < jMax; j++) {
                         //if occupied but not a buffer
                         if (!pixelBoard[k, j].Empty &&
-                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Name)) {
+                            (pixelBoard[k, j].BlockageType != "Buffer" && pixelBoard[k, j].BlockageType != drop.Id.ToString())) {
                             //cycling through surrounding pixels
                             for (int i = -buff; i <= buff + 1; i++) {
                                 for (int h = -buff; h <= buff + 1; h++) {

@@ -87,7 +87,7 @@ namespace BachelorProject.Models
                 for (var q = t.PositionX; q < t.PositionX + t.SizeX; q++) {
                     for (var r = t.PositionY; r < t.PositionY + t.SizeY; r++) {
                         pixelBoard1[q, r].Empty = false;
-                        pixelBoard1[q, r].BlockageType = t.Name;
+                        pixelBoard1[q, r].BlockageType = t.Id.ToString();
                     }
                 }
 

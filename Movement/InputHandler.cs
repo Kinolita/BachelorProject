@@ -8,14 +8,13 @@ namespace BachelorProject.Movement
     class InputHandler
     {
         //adds buffers and does routing
-        public static List<Coord> RoutingPackage(Pixels[,] pixelBoard, Coord start, int finish, Droplet drop) {
-
+        public static List<Coord> RoutingPackage(Pixels[,] pixelBoard, Coord start, Coord finish, Droplet drop) {
             var finalPath = new List<Coord>();
             try {
-                var finishCoordinate = PlaceInElectrode(pixelBoard, finish, drop);
+                //var finishCoordinate = PlaceInElectrode(pixelBoard, finish, drop);
                 Buffers.RemoveBuffer(pixelBoard);
                 Buffers.AddBuffer(pixelBoard, drop);
-                finalPath = AStarRouting.Tile.AStar(pixelBoard, start, finishCoordinate, drop);
+                finalPath = AStarRouting.Tile.AStar(pixelBoard, start, finish, drop);
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }

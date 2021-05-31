@@ -54,7 +54,7 @@ namespace BachelorProject.Movement
                               .Where(tile => tile.Y >= 0 && tile.Y < maxY)
                               //this rejects tiles with any contamination, bubble, or foreign droplet in the relevant electrode
                               .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop))
-                              .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Name)
+                              .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Id.ToString())
                                              || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
                               .ToList();
                 }

@@ -38,7 +38,7 @@ namespace BachelorProject.Movement
                         for (var j = up; j < down; j++) {
                             //if in target electrode and if not empty but also not name or buffer
                             if (pixelBoard[k, j].WhichElectrode == pixelBoard[s, t].WhichElectrode && !pixelBoard[k, j].Empty &&
-                                 !(pixelBoard[k, j].BlockageType == drop.Name || pixelBoard[k, j].BlockageType == "Buffer")) {
+                                 !(pixelBoard[k, j].BlockageType == drop.Id.ToString() || pixelBoard[k, j].BlockageType == "Buffer")) {
                                 result = false;
                             }
                         }
@@ -86,7 +86,7 @@ namespace BachelorProject.Movement
                     for (var j = up; j < down; j++) {
                         if (!Pixels.ValidateOnBoard(pixelBoard, k, j)) continue;
                         pixelBoard[k, j].Empty = false;
-                        pixelBoard[k, j].BlockageType = drop.Name;
+                        pixelBoard[k, j].BlockageType = drop.Id.ToString();
                     }
                 }
             } else {
@@ -94,7 +94,7 @@ namespace BachelorProject.Movement
                     for (var j = up; j < down + 1; j++) {
                         if (!Pixels.ValidateOnBoard(pixelBoard, k, j)) continue;
                         pixelBoard[k, j].Empty = false;
-                        pixelBoard[k, j].BlockageType = drop.Name;
+                        pixelBoard[k, j].BlockageType = drop.Id.ToString();
                     }
                 }
             }

@@ -27,6 +27,7 @@ namespace BachelorProject.Movement
             var failedDrops = new List<Droplet>();
             var attemptList = new List<Droplet>();
             var electrodePathCollection = new Dictionary<int, List<int>>();
+            var endingPixels = new Dictionary<int, Coord>();
 
 
             //setting initial drop locations and destinations
@@ -35,6 +36,7 @@ namespace BachelorProject.Movement
                 try {
                     Blockages.DropletSet(pixelBoard, new Coord(tDrop.PositionX, tDrop.PositionY), tDrop);
                     Blockages.DropletSet(pixelBoard, position, tDrop);
+                    endingPixels.Add(tDrop.Id, position);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                     throw new RouteException("Routing is not possible with the current droplet locations.");
@@ -44,10 +46,11 @@ namespace BachelorProject.Movement
             //start routing with non-contaminating drops
             //if successful add to final list, else stop
             foreach (var drop in drops) {
-                var end = endElectrodeDictionary[drop.Id];
                 if (!drop.Contamination) {
                     Console.WriteLine("Finding the path for clean drop: " + drop.Name);
-                    var pixelPath = InputHandler.RoutingPackage(pixelBoard, new Coord(drop.PositionX, drop.PositionY), end, drop);
+                    var endPos = endingPixels[drop.Id];
+                    var pixelPath = InputHandler.RoutingPackage(pixelBoard, new Coord(drop.PositionX, drop.PositionY), endPos, drop);
+                    Console.WriteLine(drop.Name);
                     if (pixelPath.Any()) {
                         var finalElectrodePath = PixelElectrodeConversion.FindElectrodes(pixelBoard, pixelPath, drop);
                         finalDropOrder.Add(drop);
@@ -79,8 +82,8 @@ namespace BachelorProject.Movement
                 //if all are successful add to final list and delete from failed list, else go to next permutation
                 for (var m = 0; m < attemptList.Count; m++) {
                     var attemptDrop = attemptList[m];
-                    var end = endElectrodeDictionary[attemptDrop.Id];
-                    var contaminatedPath = InputHandler.RoutingPackage(pixelBoard, new Coord(attemptDrop.PositionX, attemptDrop.PositionY), end, attemptList[m]);
+                    var endPos = endingPixels[attemptDrop.Id];
+                    var contaminatedPath = InputHandler.RoutingPackage(pixelBoard, new Coord(attemptDrop.PositionX, attemptDrop.PositionY), endPos, attemptList[m]);
                     Console.WriteLine(attemptDrop.Name);
 
                     //if no path found delete from collection

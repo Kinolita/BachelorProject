@@ -21,16 +21,16 @@ namespace BachelorProject.Printers
                         case (false, "Contaminated"):
                             Console.Write("C");
                             break;
-                        case (false, "drop1"):
+                        case (false, "1"):
                             Console.Write("1");
                             break;
-                        case (false, "drop2"):
+                        case (false, "2"):
                             Console.Write("2");
                             break;
-                        case (false, "drop3"):
+                        case (false, "3"):
                             Console.Write("3");
                             break;
-                        case (false, "drop4"):
+                        case (false, "4"):
                             Console.Write("4");
                             break;
                         case (false, _):

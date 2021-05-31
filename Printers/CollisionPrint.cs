@@ -12,7 +12,7 @@ namespace BachelorProject.Printers
             } else {
                 Console.WriteLine("Path collisions are: ");
                 foreach (var (keyTuple, value) in collisionsDictionary) {
-                    Console.Write(keyTuple + " collide on electrodes: ");
+                    Console.Write("Droplets " + keyTuple + " collide on electrodes: ");
                     foreach (var electrodeInt in value) {
                         Console.Write(electrodeInt + " ");
                     }
