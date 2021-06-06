@@ -27,16 +27,16 @@ namespace BachelorProject.Movement
             var failedDrops = new List<Droplet>();
             var attemptList = new List<Droplet>();
             var electrodePathCollection = new Dictionary<int, List<int>>();
+
+            //setting drop locations for start and destination
+            //also builds dictionary of ending coords
             var endingPixels = new Dictionary<int, Coord>();
-
-
-            //setting initial drop locations and destinations
             foreach (var tDrop in drops) {
-                var position = InputHandler.PlaceInElectrode(pixelBoard, endElectrodeDictionary[tDrop.Id], tDrop);
+                var endPosition = InputHandler.PlaceInElectrode(pixelBoard, endElectrodeDictionary[tDrop.Id], tDrop);
                 try {
                     Blockages.DropletSet(pixelBoard, new Coord(tDrop.PositionX, tDrop.PositionY), tDrop);
-                    Blockages.DropletSet(pixelBoard, position, tDrop);
-                    endingPixels.Add(tDrop.Id, position);
+                    Blockages.DropletSet(pixelBoard, endPosition, tDrop);
+                    endingPixels.Add(tDrop.Id, endPosition);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                     throw new RouteException("Routing is not possible with the current droplet locations.");
@@ -117,6 +117,8 @@ namespace BachelorProject.Movement
                 Console.WriteLine();
 
                 var endProduct = CollisionDetector(finalDropOrder, electrodePathCollection);
+                Printers.BoardPrint.PrintBoard(pixelBoard);
+
                 return endProduct;
             }
 

@@ -23,6 +23,8 @@ namespace BachelorProject.Models
             theRange.Add(track.Max());
             return theRange;
         }
+
+        //creates a 2D array containing information from the JSON file
         public static Pixels[,] Create(Board specs) {
             var pixelBoard1 = new Pixels[specs.Information[0].SizeX, specs.Information[0].SizeY];
 

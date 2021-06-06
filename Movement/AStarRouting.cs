@@ -52,7 +52,6 @@ namespace BachelorProject.Movement
                     return possibleTiles
                               .Where(tile => tile.X >= 0 && tile.X < maxX)
                               .Where(tile => tile.Y >= 0 && tile.Y < maxY)
-                              //this rejects tiles with any contamination, bubble, or foreign droplet in the relevant electrode
                               .Where(tile => Blockages.DropletBubbleCheck(pixelBoard, new Coord(tile.X, tile.Y), drop))
                               .Where(tile => (pixelBoard[tile.X, tile.Y].Empty || pixelBoard[tile.X, tile.Y].BlockageType == drop.Id.ToString())
                                              || (tile.X, tile.Y) == (targetTile.X, targetTile.Y))
@@ -61,9 +60,7 @@ namespace BachelorProject.Movement
 
                 while (activeTiles.Any()) {
                     var checkTile = activeTiles.OrderBy(x => x.CostDistance).First();
-
                     if (checkTile.X == finish.X && checkTile.Y == finish.Y) {
-                        //Order by ensures that it's the most low cost option. 
                         Console.Write("Destination found for ");
                         var tile = checkTile;
                         while (true) {
@@ -81,7 +78,7 @@ namespace BachelorProject.Movement
 
                     //When the tile has already been visited
                     foreach (var walkableTile in walkableTiles.Where(walkableTile => !visitedTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y))) {
-                        //When the tile is already active (A zigzag path might become straighter). 
+                        //When the tile is already active 
                         if (activeTiles.Any(x => x.X == walkableTile.X && x.Y == walkableTile.Y)) {
                             var existingTile = activeTiles.First(x => x.X == walkableTile.X && x.Y == walkableTile.Y);
                             if (existingTile.CostDistance <= checkTile.CostDistance) continue;

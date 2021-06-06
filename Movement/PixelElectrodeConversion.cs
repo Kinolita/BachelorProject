@@ -1,7 +1,6 @@
 ﻿using BachelorProject.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using BachelorProject.Models.DmfElements;
 
 namespace BachelorProject.Movement
@@ -10,69 +9,23 @@ namespace BachelorProject.Movement
     {
         //takes in pixel path and returns expanded electrode list
         public static List<int> FindElectrodes(Pixels[,] pixelBoard, List<Coord> listOfPixels, Droplet drop) {
-            var minElectrode = SmallestElectrode(pixelBoard);
             var dropSize = Math.Max(drop.SizeX, drop.SizeY);
-
-            if (dropSize > minElectrode) {
-                //expanding the original pixel path into a list of lists
-                var expandedPixelPath = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
-
-                if (drop.Contamination) {
-                    foreach (var step in expandedPixelPath) {
-                        Contamination.ContaminateBoard(pixelBoard, step);
-                    }
-                }
-
-                //converting expanded pixel path to electrodes
-                var expandedElectrodeList = PixelToElectrode(pixelBoard, expandedPixelPath);
-                return SimplifyPath(expandedElectrodeList);
-            }
-
             var finalSet = new HashSet<int>();
             var expandedPath = ExpandPixelPath(pixelBoard, listOfPixels, dropSize);
+            var simpleList = new List<int>();
 
-            //contaminating expanded path and adding electrode# to hashset
+            //contaminating expanded path and adding electrode# to set to reduce repetitions
             foreach (var step in expandedPath) {
                 if (drop.Contamination) Contamination.ContaminateBoard(pixelBoard, step);
                 foreach (var pixelLocation in step) {
                     finalSet.Add(pixelBoard[pixelLocation.X, pixelLocation.Y].WhichElectrode);
                 }
             }
-            var nestedList = finalSet.Select(step => new SortedSet<int>() { step }).ToList();
-            return SimplifyPath(nestedList);
+            simpleList.AddRange(finalSet);
+            return simpleList;
         }
 
-        //finds the smallest electrode dimension present in the board
-        private static int SmallestElectrode(Pixels[,] pixelBoard) {
-            var smallsX = 100000;
-            var smallsY = 100000;
-            for (var k = 0; k < pixelBoard.GetLength(0); k++) {
-                for (var j = 0; j < pixelBoard.GetLength(1); j++) {
-                    if (pixelBoard[k, j].WhichElectrode != -1 && pixelBoard[k, j].XRange < smallsX) { smallsX = pixelBoard[k, j].XRange; }
-                    if (pixelBoard[k, j].WhichElectrode != -1 && pixelBoard[k, j].YRange < smallsY) { smallsY = pixelBoard[k, j].YRange; }
-                }
-            }
-            if (smallsY < smallsX) { smallsX = smallsY; }
-            return smallsX;
-        }
-
-        private static List<SortedSet<int>> PixelToElectrode(Pixels[,] pixelBoard, List<List<Coord>> expandedPixelList) {
-            //sorted set is only used for human readability, doesn't add to the functionality more than set.
-            var expandedElectrodeList = new List<SortedSet<int>>();
-            var previousChecklist = new SortedSet<int>() { -1 };
-
-            foreach (var step in expandedPixelList) {
-                var checklist = new SortedSet<int>();
-                foreach (var pix in step) {
-                    checklist.Add(pixelBoard[pix.X, pix.Y].WhichElectrode);
-                }
-                if (checklist.SetEquals(previousChecklist)) continue;
-                expandedElectrodeList.Add(checklist);
-                previousChecklist = checklist;
-            }
-            return expandedElectrodeList;
-        }
-
+        // takes a path list of pixels and expands to a list of lists based on given droplet size
         private static List<List<Coord>> ExpandPixelPath(Pixels[,] pixelBoard, List<Coord> pixelPath, float dropletSize) {
             var expandedPixelList = new List<List<Coord>>();
             //finding edges of contamination path for each pixel
@@ -112,15 +65,6 @@ namespace BachelorProject.Movement
                 expandedPixelList.Add(checklist);
             }
             return expandedPixelList;
-        }
-
-        // reduces widened electrode paths to single lists for comparision 
-        private static List<int> SimplifyPath(List<SortedSet<int>> electrodePath) {
-            var simpleList = new List<int>();
-            foreach (var step in electrodePath) {
-                simpleList.AddRange(step.ToList());
-            }
-            return simpleList;
         }
     }
 }

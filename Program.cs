@@ -14,17 +14,17 @@ namespace BachelorProject
         static void Main(string[] args) {
             var path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\"));
 
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\boardWithEverything.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\mazeBoard4x3.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\board10x10Maze.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\50x50.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\30x30.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\20x20.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\10x10.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\4x3.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\100x100.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\board10x10FatMaze.json");
-            //string theStringToEndAllStrings = File.ReadAllText(path + @"\JSONBoards\32x20_mini_maze.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\boardWithEverything.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\mazeBoard4x3.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\board10x10Maze.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\50x50.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\30x30.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\20x20.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\10x10.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\4x3.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\100x100.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\board10x10FatMaze.json");
+            //string jsonString = File.ReadAllText(path + @"\JSONBoards\32x20_mini_maze.json");
             var jsonString = File.ReadAllText(path + @"\JSONBoards\standard32x20.json");
 
             var boardSpecs = JsonConvert.DeserializeObject<Board>(jsonString);
