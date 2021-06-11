@@ -8,6 +8,7 @@ namespace BachelorProject.JSONCreation
 {
     class Creator
     {
+        //method to automatically generate JSON files of any specified dimension and pixel density
         public static void SampleBoard(string boardName, int xLength, int yLength, int elecSize) {
             var info1 = new Information {
                 PlatformName = boardName,

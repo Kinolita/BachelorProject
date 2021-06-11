@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace BachelorProject.Printers
 {
+    //print methods used during development to examine path outputs
     class PathPrint
     {
         public static void FinalPrint(List<SortedSet<int>> expandedElecList) {

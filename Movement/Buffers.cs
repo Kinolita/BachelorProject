@@ -10,6 +10,7 @@ namespace BachelorProject.Movement
             return a >= 0 && a < max;
         }
 
+        //adds buffers to a board based on droplet size
         public static void AddBuffer(Pixels[,] pixelBoard, Droplet drop) {
             double dropSize = Droplet.MaxSize(drop);
             if (dropSize > 0) { dropSize -= 1; }
@@ -114,6 +115,7 @@ namespace BachelorProject.Movement
             }
         }
 
+        //removes all buffers from a board
         public static void RemoveBuffer(Pixels[,] pixelBoard) {
             for (int k = 0; k < pixelBoard.GetLength(0); k++) {
                 for (int j = 0; j < pixelBoard.GetLength(1); j++) {

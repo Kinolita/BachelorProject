@@ -37,6 +37,7 @@ namespace BachelorProject.Movement
                 var activeTiles = new List<Tile> { start };
                 var visitedTiles = new List<Tile>();
 
+                //finding neighbors
                 static List<Tile> GetPossibleTiles(Pixels[,] pixelBoard, Tile currentTile, Tile targetTile, Droplet drop) {
                     var possibleTiles = new List<Tile>() {
                         new Tile { X = currentTile.X, Y = currentTile.Y - 1, Parent = currentTile, Cost = currentTile.Cost + 1 },
@@ -49,6 +50,7 @@ namespace BachelorProject.Movement
                     var maxX = pixelBoard.GetLength(0);
                     var maxY = pixelBoard.GetLength(1);
 
+                    // checking each possible target for validity of a move there
                     return possibleTiles
                               .Where(tile => tile.X >= 0 && tile.X < maxX)
                               .Where(tile => tile.Y >= 0 && tile.Y < maxY)

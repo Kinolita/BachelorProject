@@ -6,6 +6,7 @@ namespace BachelorProject.Models
     {
         // Inspired from https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ 
         // This checks if a given point lies inside a given polygon 
+        // used for pixel assignment of custom polygon electrodes
 
         static int INF = 10000;
 
@@ -27,9 +28,9 @@ namespace BachelorProject.Models
                     (q.X - p.X) * (r.Y - q.Y);
 
             if (val == 0) {
-                return 0; // co-linear 
+                return 0;
             }
-            return (val > 0) ? 1 : 2; // clock or counter clockwise 
+            return (val > 0) ? 1 : 2;
         }
 
         // The function that returns true if line segment 'p1q1' and 'p2q2' intersect. 

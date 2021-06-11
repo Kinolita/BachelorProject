@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace BachelorProject.Models.DmfElements
-
 {
     public class Actuator
     {

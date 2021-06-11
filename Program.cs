@@ -30,27 +30,9 @@ namespace BachelorProject
             var boardSpecs = JsonConvert.DeserializeObject<Board>(jsonString);
             var pixelBoard1 = Pixels.Create(boardSpecs);
             Information.PrintInformation(boardSpecs);
-
             //note: droplets larger than 1 electrode should be placed in the center or top left of their range
-            //int startElectrode = 33;
-            //int endElectrode = 606;
 
-            //int dropletSize = 7;
-            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
-            //dropletSize = 8;
-            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
-
-            //startElectrode = 56;
-            //endElectrode = 20;
-            //dropletSize = 4;
-            //InputHandler.RoutingPackage(pixelBoard1, startElectrode, endElectrode, dropletSize);
-
-            //dropletSize = 2;
-            //Pixels[,] pixelBoard2 = Pixels.ScaleDown(pixelBoard1);
-            //InputHandler.RoutingPackage(pixelBoard2, startElectrode, endElectrode, dropletSize);
-            //BoardPrint.PrintBoard(pixelBoard1);
-            //BoardPrint.PrintBoard(pixelBoard2);
-
+            //strategically placed droplets for testing purposes
             var drop1 = DropletCreation(pixelBoard1, 108, "drop1", 001, 7, false);
             var drop2 = DropletCreation(pixelBoard1, 256, "drop2", 002,11, true);
             var drop3 = DropletCreation(pixelBoard1, 422, "drop3", 003,25, true);
@@ -71,7 +53,7 @@ namespace BachelorProject
                 Console.WriteLine(e.Message);
             }
 
-            //Helper method to create droplets
+            //Helper method to create strategic droplet placement
             static Droplet DropletCreation(Pixels[,] pixelBoard, int location, string name, int id, int size, bool isContaminating) {
                 var coordinates = new Coord();
                 try {

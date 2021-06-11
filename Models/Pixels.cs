@@ -8,7 +8,7 @@ namespace BachelorProject.Models
     {
         public bool Empty { get; set; }
         public string BlockageType { get; set; }
-        // (Contaminated, OoB, bubble, droplet name, etc.)
+        // (Contaminated, OoB, bubble, droplet ID, etc.)
         public int WhichElectrode { get; set; }
         public int XRange { get; set; }
         public int YRange { get; set; }
@@ -106,6 +106,7 @@ namespace BachelorProject.Models
             return pixelBoard1;
         }
 
+        //if successful this will reduce the pixel board height and width by half
         public static Pixels[,] ScaleDown(Pixels[,] pixelBoard, out bool isScaled) {
             //this will only work for boards with even dimensioned electrodes
             var square = new List<Coord> { new Coord(1, 0), new Coord(0, 1), new Coord(1, 1) };

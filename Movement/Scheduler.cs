@@ -10,6 +10,7 @@ namespace BachelorProject.Movement
 {
     class Scheduler
     {
+        //main method that coordinates the system
         public static Dictionary<(int, int), List<int>> MovingDroplets(Pixels[,] pixelBoard, List<Droplet> drops, Dictionary<int, int> endElectrodeDictionary) {
 
             // scaling down the pixel board
@@ -142,6 +143,7 @@ namespace BachelorProject.Movement
             }
         }
 
+        //compares different paths and finds common electrodes in them
         private static Dictionary<(int, int), List<int>> CollisionDetector(List<Droplet> finalOrder, Dictionary<int, List<int>> electrodePathCollection) {
             var dropIds = finalOrder.Select(drop => drop.Id).ToList();
             var collisionList = new Dictionary<(int, int), List<int>>();
